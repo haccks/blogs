@@ -3,14 +3,13 @@ on:
   push:
     branches:
       - main
-      # - gh-pages
     paths-ignore:
       - .gitignore
       - README.md
       - LICENSE
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  # workflow_dispatch:
 
 permissions:
   contents: read
