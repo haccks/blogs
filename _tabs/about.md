@@ -5,7 +5,7 @@ order: 4
 ---
 
 
-![pic](https://media.licdn.com/dms/image/C5603AQEf2F2xnjuizA/profile-displayphoto-shrink_800_800/0/1619293677610?e=1686787200&v=beta&t=8DodWbvA1dXG7Hfj8ggCk6mw2SNh7T1afaB7U6vBtQc){: .right}
+![about-pic](https://media.licdn.com/dms/image/C5603AQEf2F2xnjuizA/profile-displayphoto-shrink_800_800/0/1619293677610?e=1686787200&v=beta&t=8DodWbvA1dXG7Hfj8ggCk6mw2SNh7T1afaB7U6vBtQc){: .right}
 
 Hi! My name is Mohammad Danish Khan.  
 
