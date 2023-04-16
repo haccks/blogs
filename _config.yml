@@ -20,10 +20,10 @@ timezone: Asia/Kolkata
 
 title: haccks # the main title
 
-tagline: Yet another coding journal! # it will display as the sub-title
+tagline: Yet another programming blog! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  A human powered programming blogging site. 
+  A programming blog that features articles/tutorials on coding, development and software design for backend developers. 
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: "https://www.haccks.com"

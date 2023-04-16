@@ -7,7 +7,7 @@ order: 4
 
 ![about-pic](/assets/img/profile/about_pic.jpeg){: .right}
 
-Hi! My name is Mohammad Danish Khan.  
+Hi! My name is Mohammad Danish Khan (aka haccks).  
 
 I received my bachelor's degree in computer engineering in 2k15 from Faculty of Engineering, Jamia Millia Islamia, New Delhi, India. Worked as a software developer in the exciting areas of software industry ever since.   
 
