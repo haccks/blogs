@@ -7,7 +7,7 @@ tags: [dbms, rdbms]     # TAG names should always be lowercase
 render_with_liquid: false
 ---
 
-Database management system (DBMS) is a software to manage large set of data on a computer hardware. RDBMS stands for relation database management system. You can say that a RDBMS is an subset/extension of a DBMS.
+Database management system (DBMS) is a software to manage large set of data on a computer hardware. RDBMS stands for relational database management system. You can say that a RDBMS is an subset/extension of a DBMS.
 
 DBMS stores data as tables (without any relations between tables) or flat files. Document databses (Neo4j) or graph databases (MongoDB) are examples of DBMS.   
 
