@@ -18,4 +18,4 @@ DBMS applications can be **relational** or **non-relational**. Note that DBMS of
 
 A *non-realational* DBMS stores data as *tables (without any relations between tables) or flat files*. Document databses ([Neo4j](https://neo4j.com/)) or graph databases ([MongoDB](https://www.mongodb.com/)) are examples of DBMS.   
 
-On the other hand a RDBMS application store data in *tabular form with relations between the tables*. MySQL, PostgresSQL are examples of RDBMS. Tables in RDBMS can have a unique identifies (called primary key). Data values are stored in the tables and each of these values can be accecible through structured query language (SQL). 
+On the other hand a RDBMS application store data in *tabular form with relations between the tables*. MySQL, PostgresSQL are examples of RDBMS. Tables in RDBMS can have a unique identifies (called primary key). Data values are stored in the tables and each of these values can be accesible through structured query language (SQL). 
