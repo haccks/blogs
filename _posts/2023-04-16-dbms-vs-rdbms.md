@@ -1,0 +1,14 @@
+---
+title: What is the difference between DBMS and RDBMS?
+description: RDMBS stores data in tabular form and have relations between those tables while DBMS stores data in flat files or tables (without any relations between them)
+date: 2023-04-17 11:00:00 +0530
+categories: [database, dbms]
+tags: [dbms, rdbms]     # TAG names should always be lowercase
+render_with_liquid: false
+---
+
+Database management system (DBMS) is a software to manage large set of data on a computer hardware. RDBMS stands for relation database management system. You can say that a RDBMS is an subset/extension of a DBMS.
+
+DBMS stores data as tables (without any relations between tables) or flat files. Document databses (Neo4j) or graph databases (MongoDB) are examples of DBMS.   
+
+On the other hand a RDBMS application store data in tabular form with relations between the tables. MySQL, PostgresSQL are examples of RDBMS. Tables in RDBMS can have a unique identifies (called primary key). Data values are stored in the tables and each of these values can be accecible. 

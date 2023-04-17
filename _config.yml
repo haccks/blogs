@@ -22,8 +22,8 @@ title: haccks # the main title
 
 tagline: Yet another programming blog! # it will display as the sub-title
 
-description: >- # used by seo meta and the atom feed
-  A programming blog that features articles/tutorials on coding, development and software design for backend developers. 
+description: >- # used by seo meta and the atom feed # A human powered programming blogs.
+  Programming blogs featuring articles/tutorials on coding, development and software design for backend developers. 
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: "https://www.haccks.com"
