@@ -1,5 +1,5 @@
 ---
-title: What is the difference between DBMS and RDBMS?
+title: What is the difference between RDBMS and DBMS ?
 description: RDMBS stores data in tabular form and have relations between those tables while non-relational DBMS stores data in flat files or tables (without any relations between them)
 date: 2023-04-17 11:00:00 +0530
 categories: [database, dbms]
