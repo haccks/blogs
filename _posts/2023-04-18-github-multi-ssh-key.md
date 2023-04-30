@@ -1,5 +1,5 @@
 ---
-title: How to use multiple github accounts on Mac OS X?
+title: How to use multiple github accounts on Mac?
 description: If you have two github accounts for personal and work use then you might have some issues using both accounts on same Mac. If this is the case then this article will help you to setup both accounts on your Mac. 
 date: 2023-04-18 14:00:00 +0530
 categories: [dev-ops, version-control]
