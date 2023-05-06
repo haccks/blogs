@@ -67,7 +67,7 @@ Host *
 
 Save the file.
 
-> Do not add any identity file in `Host *` as suggested [here](https://apple.stackexchange.com/a/333547). We are using same host (`github.com`) for both account. This will make server to choose the key for the first added identity to the `ssh-agent` always. Adding `IdentitiesOnly yes` will prevent the server to make the connection using the first available key and force it to use the keys placed under different hosts above.
+> Do not add any identity file in `Host *` as suggested [here](https://apple.stackexchange.com/a/333547). We are using same host (`github.com`) for both account. This will make the server to always choose the key for the first added identity to the `ssh-agent`. Adding `IdentitiesOnly yes` will prevent the server to make the connection using the first available key and force it to use the respective keys placed under different hosts above.
 {: .prompt-tip}
   
 ## 3. Add keys to macOS Keychain
@@ -104,7 +104,6 @@ If you followed everything to this point, this should return
 ```
 Hi USERNAME! You've successfully authenticated, but GitHub does not provide shell access.
 ```
-for each command.
 
 ## 6. Clone the repo
 **Now is the tricky part**.  
