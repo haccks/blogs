@@ -9,7 +9,7 @@ render_with_liquid: false
 
 Like many others, I too have two github accounts, one for personal use and another for work. I was having trouble using both accounts on my mac for personal and office projects. I tried some tutorials and none worked out for me not because they were wrong but the instructions were not comprehensive. In this article I am putting together all the necessary steps to make it work.  
 
-> This solution works for macOS Monterey and later. 
+> This solution works for macOS Monterey (Version 12.x.x) and later. 
 {: .prompt-info }
  
 
