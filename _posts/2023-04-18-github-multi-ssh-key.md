@@ -7,7 +7,7 @@ tags: [github, git, ssh, mac, github-account, multiple-github-accounts]     # TA
 render_with_liquid: false
 ---
 
-Like many others, I too have two github accounts, one for personal use and another for work. I was having trouble using both accounts on my mac for personal and office projects. I tried some tutorials and none worked out for me not because they were wrong but the instructions were not comprehensive. In this article I am putting together all the necessary steps to make it work.  
+Like many others, I too have two github accounts, one for personal use and another for work. I was having trouble using both accounts on my mac for personal and office projects. I tried some tutorials and none worked out for me not because they were wrong but the instructions were not comprehensive. In this article I am putting it together all the necessary steps to make it work.  
 
 > This solution works for macOS Monterey (Version 12.x.x) and later. 
 {: .prompt-info }
@@ -97,8 +97,8 @@ Add public keys to your account on GitHub. Github already has good documentation
 Test the connection for both accounts  
 
 ```bash
-ssh -T git@github.com 
-ssh -T git@github-work.com
+ssh -T git@github.com
+ssh -T git@github.com-work
 ```
 If you followed everything to this point, this should return  
 ```
