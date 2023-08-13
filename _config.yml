@@ -18,8 +18,7 @@ timezone: Asia/Kolkata
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-#title: haccks # the main title
-
+#title: hacc❯|s # the main title
 tagline: Yet another programming blog! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed # A human powered programming blogs.
@@ -80,8 +79,8 @@ theme_mode: #[light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: "https://media.licdn.com/dms/image/C5603AQEf2F2xnjuizA/profile-displayphoto-shrink_800_800/0/1619293677610?e=1686787200&v=beta&t=8DodWbvA1dXG7Hfj8ggCk6mw2SNh7T1afaB7U6vBtQc"
-
+# avatar: "https://media.licdn.com/dms/image/C5603AQEf2F2xnjuizA/profile-displayphoto-shrink_800_800/0/1619293677610?e=1686787200&v=beta&t=8DodWbvA1dXG7Hfj8ggCk6mw2SNh7T1afaB7U6vBtQc"
+avatar: "assets/img/avatar/h1-01.jpg"
 # boolean type, the global switch for TOC in posts.
 toc: true
 
