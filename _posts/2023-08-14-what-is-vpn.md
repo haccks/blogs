@@ -7,10 +7,14 @@ tags: [vpn, remote-access, virtual-private-network]     # TAG names should alway
 render_with_liquid: false
 ---
 
+![vpn-light](/assets/img/media/vpn-1-light.drawio.svg){: .light }
+
+![vpn-dark](/assets/img/media/vpn-1-dark.drawio.svg){: .dark }
+
 ## What is a VPN?
 Before we begin, let's understand some basic terms of networking.
 ### Network
-In this context, a network is a group of computers connected with each other either physically (via [Ethernet cable](https://en.wikipedia.org/wiki/Ethernet_crossover_cable)) or wirelessly  (Wi-Fi or Bluetooth)
+In this context, a network is a group of computers connected with each other either physically (via [Ethernet cable](https://en.wikipedia.org/wiki/Ethernet_crossover_cable)) or wireless (Wi-Fi or Bluetooth)
 ### Private Network
 A private network is a network of computers connected locally or in a restricted local environment at your home or at any organization. A local area network (LAN) is an example where you use private address space of IP (IPv4/IPv6) addresses `192.168.0.0/16`, `172.16.0.0/12` and/or `10.0.0.0/8`. Simple put, the computers connected to this network are restricted to public access.
 
