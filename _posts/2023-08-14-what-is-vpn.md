@@ -5,6 +5,7 @@ date: 2023-08-14 5:00:00 +0530
 categories: [networking]
 tags: [vpn, remote-access, virtual-private-network]     # TAG names should always be lowercase
 render_with_liquid: false
+# pin: true
 ---
 
 ![vpn-light](/assets/img/media/vpn-1-light.drawio.svg){: .light }
@@ -48,7 +49,7 @@ VPN is configured on the server side (VPN server) and the server listens for the
 It allows to securely connect two sites/offices over the internet. To establish and maintain a connection either a router or a firewall is configured on each sites.
 
 ## How does a VPN work?
-To understand how a VPN works, I will explain the remote access VPN. A VPN setup has two components, a **VPN server** and a **VPN client**.  
+In thins post, I will explain the remote access VPN. A VPN setup has two components, a **VPN server** and a **VPN client**.  
 
 + VPN client sits on your computer. You connect to the VPN using this client running in the background. Between the VPN server and computer, it creates a VPN tunnel (an encrypted connection that encapsulates data packets inside other data packets). 
 
@@ -61,8 +62,11 @@ To understand how a VPN works, I will explain the remote access VPN. A VPN setup
 
 + The requested resource will be send back to the VPN server. It will then encrypt the resource and send it back to your computer.   
 
-+ VPN client will decrypt this data and will show you the home page of [https://haccks.com](https://haccks.com) 
++ VPN client will decrypt this data and will show you the home page of [https://haccks.com](https://haccks.com)  
 
+![vpn-remote-light](/assets/img/media/vpn-remote-access-light.drawio.svg){: .light }
+
+![vpn-remote-dark](/assets/img/media/vpn-remote-access-dark.drawio.svg){: .dark }  
 
 **But hey, how does a VPN help an employee sitting in Bangalore to remotely connect to a computer at office in Seattle?**  
 
