@@ -77,6 +77,9 @@ It will be pretty much similar to the steps discussed above but, to make it simp
 Let's say the VPN server is using the `10.8.0.0` series of IP addresses. When a computer is connected to this server then it will assign an IP to that computer from this pool of IP address making each device local to each other, i.e creating a local area network (private network). That's what we call a virtual private network!   
 So, if it assigns the address `10.8.0.1` to the employee's computer and the address `10.8.0.2` to the computer in the Seattle office, both devices can ping each other behaving like they both are connected to the same private network. 
 
+![vpn-remote-light](/assets/img/media/vpn-remote-access-2-light.drawio.svg){: .light }
+![vpn-remote-dark](/assets/img/media/vpn-remote-access-2-dark.drawio.svg){: .dark }
+
 ------------
 
 Resources:
