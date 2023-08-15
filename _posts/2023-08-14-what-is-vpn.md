@@ -8,9 +8,9 @@ render_with_liquid: false
 # pin: true
 ---
 
-![vpn-light](/assets/img/media/vpn-1-light.drawio.svg){: .light }
+![vpn-light](/assets/img/media/vpn-main-light.drawio.svg){: .light }
 
-![vpn-dark](/assets/img/media/vpn-1-dark.drawio.svg){: .dark }
+![vpn-dark](/assets/img/media/vpn-main-dark.drawio.svg){: .dark }
 
 ## What is a VPN?
 Before we begin, let's understand some basic terms of networking.
@@ -64,9 +64,9 @@ In thins post, I will explain the remote access VPN. A VPN setup has two compone
 
 + VPN client will decrypt this data and will show you the home page of [https://haccks.com](https://haccks.com)  
 
-![vpn-remote-light](/assets/img/media/vpn-remote-access-light.drawio.svg){: .light }
+![vpn-remote-light](/assets/img/media/vpn-ra-1-light.drawio.svg){: .light }
 
-![vpn-remote-dark](/assets/img/media/vpn-remote-access-dark.drawio.svg){: .dark }  
+![vpn-remote-dark](/assets/img/media/vpn-ra-1-dark.drawio.svg){: .dark }  
 
 **But hey, how does a VPN help an employee sitting in Bangalore to remotely connect to a computer at office in Seattle?**  
 
@@ -74,11 +74,13 @@ It will be pretty much similar to the steps discussed above but, to make it simp
 
 > *VPN server dynamically assigns a unique IP addresses to each of the client connected to it.*  
   
-Let's say the VPN server is using the `10.8.0.0` series of IP addresses. When a computer is connected to this server then it will assign an IP to that computer from this pool of IP address making each device local to each other, i.e creating a local area network (private network). That's what we call a virtual private network!   
-So, if it assigns the address `10.8.0.1` to the employee's computer and the address `10.8.0.2` to the computer in the Seattle office, both devices can ping each other behaving like they both are connected to the same private network. 
+Let's say the VPN server is using the `10.8.0.0` series of IP addresses. When a computer is connected to this server then it will assign an IP address to that computer from this pool of IP address.    
+So, if it assigns the address `10.8.0.1` to the employee's computer and the addresses `10.8.0.2`, `10.8.0.3`, `10.8.0.4` to computers at Seattle office then each devices can ping each other behaving like they are all connected to the same private network.  
 
-![vpn-remote-light2](/assets/img/media/vpn-ra-new-light.drawio.svg){: .light }
-![vpn-remote-dark2](/assets/img/media/vpn-ra-new-dark.drawio.svg){: .dark }
+You should note that each of these devices will also have IP addresses assigned to them by their respective routers at their ends. For example: `192.168.1.10` for device in Bangalore and `172.16.10.100`, `172.16.10.101`, `172.16.10.102` for devices at Seattle office. In the diagram below only the IP address assigned by VPN server to the devices are shown to make it simple.
+
+![vpn-remote-light2](/assets/img/media/vpn-ra-2-light.drawio.svg){: .light }
+![vpn-remote-dark2](/assets/img/media/vpn-ra-2-dark.drawio.svg){: .dark }
 
 ------------
 
