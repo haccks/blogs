@@ -18,7 +18,7 @@ timezone: Asia/Kolkata
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-#title: hacc❯|s # the main title
+# title: hacc❯|s # the main title
 tagline: Yet another programming blog! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed # A human powered programming blogs.
@@ -53,10 +53,6 @@ google_site_verification: # fill in to your verification string
 
 google_analytics:
   id: G-ZECXPVPE0N # fill in your Google Analytics ID
-  # Google Analytics pageviews report settings
-  pv:
-    proxy_endpoint: # fill in the Google Analytics superProxy endpoint of Google App Engine
-    cache_path: # the local PV cache data, friendly to visitors from GFW region
 
 # Prefer color scheme setting.
 #
