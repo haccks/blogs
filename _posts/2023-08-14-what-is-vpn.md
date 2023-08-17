@@ -3,7 +3,7 @@ title: What is a VPN? How does a VPN work?
 description: A virtual private network (VPN) is a method to create a secure connection over an insecure network like public internet.
 date: 2023-08-14 5:00:00 +0530
 categories: [networking]
-tags: [vpn, remote-access, virtual-private-network]     # TAG names should always be lowercase
+tags: [vpn, remote-access, virtual-private-network]  # TAG names should always be lowercase
 render_with_liquid: false
 # pin: true
 ---
