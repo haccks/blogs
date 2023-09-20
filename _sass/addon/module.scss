@@ -11,13 +11,12 @@
 }
 
 %section {
-  #core-wrapper & {
+  main & {
     margin-top: 2.5rem;
     margin-bottom: 1.25rem;
 
     &:focus {
-      outline: none;
-      /* avoid outline in Safari */
+      outline: none; /* avoid outline in Safari */
     }
   }
 }
@@ -97,7 +96,7 @@
 }
 
 %img-caption {
-  +em {
+  + em {
     display: block;
     text-align: center;
     font-style: normal;
@@ -108,7 +107,7 @@
 }
 
 %sidebar-links {
-  color: rgba(117, 117, 117, 0.9);
+  color: var(--sidebar-muted-color);
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -121,6 +120,11 @@
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+%text-highlight {
+  color: inherit;
+  font-weight: 600;
 }
 
 /* ---------- scss mixin --------- */
@@ -145,7 +149,11 @@
   padding-right: $val;
 }
 
-@mixin input-placeholder {
+@mixin placeholder {
+  color: var(--text-muted-color) !important;
+}
+
+@mixin placeholder-focus {
   opacity: 0.6;
 }
 
