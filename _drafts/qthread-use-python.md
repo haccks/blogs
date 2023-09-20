@@ -43,5 +43,5 @@ Let's breakdown the above paragraph first,
 
 
 ## Examples
-Let's create a simple toy app to demonstrate downloading a large file. This will have a simple progressbar and a push button. When user press the button download will start and at the same time progress bar will be updated showing the progress of the downloading file.
+Let's create a simple toy app to demonstrate downloading a large file. This will have a simple progressbar and a push button. When user press the button download will start and at the same time progress bar will be updated showing the progress of the downloading file. (Add cancel download button later)
 
