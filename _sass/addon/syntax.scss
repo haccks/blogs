@@ -101,6 +101,9 @@ code {
   color: var(--code-color);
 
   &.highlighter-rouge {
+    font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas;  /* Change font for inline code */
+    font-variant-ligatures: none; 
+
     font-size: $code-font-size;
     padding: 3px 5px;
     word-break: break-word;
