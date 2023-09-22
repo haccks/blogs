@@ -48,22 +48,23 @@ touch ~/.ssh/config
 
 Open `~/.ssh/config`{: .filepath} file and modify it as follows
 
-<pre lang="bash"><code>#GitHub for personal
-Host <b>github.com</b>                    # Notice the host for personal
+```conf
+#GitHub for personal
+Host github.com                              # Notice the host for personal
   HostName github.com
   User git
-  IdentityFile <b>~/.ssh/id_ed25519_personal</b>
+  IdentityFile ~/.ssh/id_ed25519_personal    # Private key for personal account
 
 #Github for work
-Host <b>github.com-work</b>               # Notice the host for work 
+Host github.com-work                         # Notice the host for work 
   HostName github.com
   User git
-  IdentityFile <b>~/.ssh/id_ed25519_work</b>
+  IdentityFile ~/.ssh/id_ed25519_work        # Private key for work account
 
 Host *
-   AddKeysToAgent yes                     # Load the keys from keychain into ssh-agent automatically
-   IdentitiesOnly yes                     # Tells the ssh-agent server to use the IdentityFiles specified above for each host
-</code></pre>
+   AddKeysToAgent yes                        # Load the keys from keychain into ssh-agent automatically
+   IdentitiesOnly yes                        # Tells the ssh-agent server to use the IdentityFiles specified above for each host
+```
 
 Save the file.
 
@@ -110,24 +111,31 @@ Hi USERNAME! You've successfully authenticated, but GitHub does not provide shel
 
 If you want to use your `personal` account then copy the remote repo link from github and clone it as
  
-> <pre lang="bash"><code>git clone <b>git@github.com</b>:personal/project.git
-</code></pre>
+```bash
+git clone git@github.com:personal/project.git
+```
 
 or reset if you already have cloned 
 
-> <pre lang="bash"><code>git remote set-url origin <b>git@github.com</b>:personal/project.git
-</code></pre>
+```bash
+git remote set-url origin git@github.com:personal/project.git
+```
     
      
 if you want to use your `work` account then copy the remote repo url from github and modify the url by *replacing the host **`git@github.com`** by the host **`git@github.com-work`***
   
-> <pre lang="bash"><code>git clone <b>git@github.com-work</b>:company/project.git
-</code></pre>
+```bash
+git clone git@github.com-work:company/project.git
+```
 
 Same rule for setting remote `origin` url
 
-> <pre lang="bash"><code>git remote set-url origin <b>git@github.com-work</b>:company/project.git
-</code></pre>
+<!-- > <pre lang="bash"><code>git remote set-url origin <b>git@github.com-work</b>:company/project.git
+</code></pre> -->
+
+```bash
+git remote set-url origin git@github.com-work:company/project.git
+```
     
 ## 7. Test it out
 Create a repo on github and then clone it as instructed above. Change the current working directory to the local repository. Configure the user email and name (you can do globally too but I prefer this way) for this repository.  
