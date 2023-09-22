@@ -7,7 +7,13 @@ tags: [python3, PySide6, Qt, QThread]     # TAG names should always be lowercase
 render_with_liquid: false
 ---
 
-<h1>Intro</h1>
+## Prerequisite:
++ Basic python programming
++ Basic understanding of threads
++ Qt Framework
++ PySide6 (or PyQt6)
+
+## Intro
 
 When it comes to use `QThread`, internet is divided into two groups:   
 
@@ -45,3 +51,76 @@ Let's breakdown the above paragraph first,
 ## Examples
 Let's create a simple toy app to demonstrate downloading a large file. This will have a simple progressbar and a push button. When user press the button download will start and at the same time progress bar will be updated showing the progress of the downloading file. (Add cancel download button later)
 
+### 1. Subclass `QThread` (Without event loop)
+
+```py
+import sys
+import time
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, \
+    QPushButton, QVBoxLayout, QProgressBar, QMessageBox
+from PySide6.QtCore import QThread, Signal, Slot, QTimer
+
+
+class WorkerThread(QThread):
+    progress = Signal(int)
+
+    def __init__(self, n):
+        super().__init__()
+        self.n = n
+        self.timer = QTimer()
+
+    def do_work(self):
+        for i in range(1, self.n+1):
+            time.sleep(1)
+            self.progress.emit(i)
+
+    def run(self):
+        self.do_work()
+
+class MainWindow(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setGeometry(100, 100, 300, 50)
+        self.setWindowTitle('QThread subclass 1')
+
+        # setup widget
+        self.widget = QWidget()
+        layout = QVBoxLayout()
+        self.widget.setLayout(layout)
+        self.setCentralWidget(self.widget)
+
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.setValue(0)
+
+        self.download_btn = QPushButton('Download', clicked=self.download)
+
+        layout.addWidget(self.progress_bar)
+        layout.addWidget(self.download_btn)
+
+        self.show()
+
+    def download(self):
+        num = 5
+        self.download_btn.setEnabled(False)
+        self.progress_bar.reset()
+        self.progress_bar.setMaximum(num)
+
+        self.worker_thread = WorkerThread(num)
+        self.worker_thread.progress.connect(self.progress_bar.setValue)
+        self.worker_thread.finished.connect(self.finished)
+        self.worker_thread.finished.connect(self.worker_thread.deleteLater)
+        self.worker_thread.start()
+
+    def finished(self):
+        QMessageBox.information(self, "Download status", "Download Complete!")
+        self.download_btn.setEnabled(True)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    app.exec()
+
+```
+<!-- {: .nolineno } -->
+{: file="example-1" }

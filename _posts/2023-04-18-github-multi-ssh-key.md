@@ -121,7 +121,7 @@ or reset if you already have cloned
      
 if you want to use your `work` account then copy the remote repo url from github and modify the url by *replacing the host **`git@github.com`** by the host **`git@github.com-work`***
   
-> <pre><code>git clone <b>git@github.com-work</b>:company/project.git
+> <pre lang="bash"><code>git clone <b>git@github.com-work</b>:company/project.git
 </code></pre>
 
 Same rule for setting remote `origin` url
