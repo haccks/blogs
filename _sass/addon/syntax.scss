@@ -46,7 +46,7 @@ html {
   margin-bottom: 1.2em; /* Override BS Inline-code style */
 }
 
-highlight {
+.highlight {
   @extend %rounded;
   @extend %code-snippet-bg;
 
@@ -62,6 +62,10 @@ highlight {
     font-size: $code-font-size;
     line-height: 1.4rem;
     word-wrap: normal; /* Fixed Safari overflow-x */
+
+    /* Change font family for code (inside triple backtick: ``` code ```) */
+    font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas;
+    font-variant-ligatures: none;  /* Turn off ligatures */
   }
 
   table {
@@ -100,11 +104,12 @@ code {
   hyphens: none;
   color: var(--code-color);
 
+   /* Change font for code inside <pre><code> </code></pre> */
   font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas;
   font-variant-ligatures: none;  /* Turn off ligatures */
 
   &.highlighter-rouge {
-    /* Change font for inline code */
+    /* Change font for inline code (inside single backtick: ` code `) */
     font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas;
     font-variant-ligatures: none; 
 

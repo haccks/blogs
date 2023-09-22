@@ -172,12 +172,6 @@ kbd {
   box-shadow: inset 0 -2px 0 var(--kbd-wrap-color);
 }
 
-/* Change font family for code blocks */
-pre {
-  font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas;
-  font-variant-ligatures: none;  /* Turn off ligatures */
-}
-
 footer {
   font-size: 0.8rem;
   background-color: var(--main-bg);
