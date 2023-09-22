@@ -29,7 +29,7 @@ To use `QThread` correctly one has to understand the basics of this object. Let'
 
 ## What is an vent Loop?
 
-An event loop is a loop that listen for any events like: user input, network traffic, sensors, timers etc. and dispatches these events to the target objects. In Qt, event loop starts when object's `exec()` method is called. [`QApplication().exec()`](https://doc.qt.io/qt-6/qeventloop.html#exec) starts the main event loop and wait until `exit()` is called.  
+An event loop is a loop that listen for any events like: user input, network traffic, sensors, timers etc. and dispatches these events to the target objects. In Qt, event loop starts when object's `exec()` method is called. [`QApplication().exec()`](https://doc.qt.io/qt-6/qeventloop.html#exec) starts the main event loop and wait until `exit()` is called. 
 
 >*"It is necessary to call this function to start event handling. The main event loop receives events from the window system and dispatches these to the application widgets."* -- [`exec()` doc](https://doc.qt.io/qt-6/qeventloop.html#exec)
 {: .prompt-info}
@@ -42,9 +42,7 @@ Quoting from the documentation:
 
 Let's breakdown the above paragraph first,
 1. *A `QThread` object manages one thread of control*: Means if same thread is used to do two different long running tasks at the same time then they won't be done in parallel. One task has to wait for other to finish.  
-
 2. *`QThreads` begin executing in `run()`*: When `QThread().start()` is called then it eventually calls `run()` method of `QThread` and then this `run()` method starts the actual thread. So, basically **`QThread` is not actually a thread but a wrapper around a thread**.  
-
 3. *`run()` starts the event loop by calling `exec()` and runs a Qt event loop inside the thread*: A local event loop starts within the thread and wait until `exit()` is called (more on this later).
 
 
