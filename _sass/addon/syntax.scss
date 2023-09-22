@@ -100,8 +100,12 @@ code {
   hyphens: none;
   color: var(--code-color);
 
+  font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas;
+  font-variant-ligatures: none;  /* Turn off ligatures */
+
   &.highlighter-rouge {
-    font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas;  /* Change font for inline code */
+    /* Change font for inline code */
+    font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas;
     font-variant-ligatures: none; 
 
     font-size: $code-font-size;
