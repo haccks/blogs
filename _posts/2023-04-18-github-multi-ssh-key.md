@@ -48,7 +48,7 @@ touch ~/.ssh/config
 
 Open `~/.ssh/config`{: .filepath} file and modify it as follows
 
-<pre><code>#GitHub for personal
+<pre lang="bash"><code>#GitHub for personal
 Host <b>github.com</b>                    # Notice the host for personal
   HostName github.com
   User git
@@ -110,12 +110,12 @@ Hi USERNAME! You've successfully authenticated, but GitHub does not provide shel
 
 If you want to use your `personal` account then copy the remote repo link from github and clone it as
  
-> <pre><code>git clone <b>git@github.com</b>:personal/project.git
+> <pre lang="bash"><code>git clone <b>git@github.com</b>:personal/project.git
 </code></pre>
 
 or reset if you already have cloned 
 
-> <pre><code>git remote set-url origin <b>git@github.com</b>:personal/project.git
+> <pre lang="bash"><code>git remote set-url origin <b>git@github.com</b>:personal/project.git
 </code></pre>
     
      
@@ -126,7 +126,7 @@ if you want to use your `work` account then copy the remote repo url from github
 
 Same rule for setting remote `origin` url
 
-> <pre><code>git remote set-url origin <b>git@github.com-work</b>:company/project.git
+> <pre lang="bash"><code>git remote set-url origin <b>git@github.com-work</b>:company/project.git
 </code></pre>
     
 ## 7. Test it out
