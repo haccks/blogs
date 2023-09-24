@@ -333,9 +333,7 @@ Update `__init__()` method in `MainWindow` class
 ```
 {: .nolineno }
 
-We added a `Cancel` button and connected it's `clicked` signal to `self.cancel()` slot. How do we implement this slot? Well, first we will add another custom signal to `MainWindow` and a new slot to `WorkerThread` to handle this signal. This signal will emit when user will press `Cancel`.   
-
-
+We added a `Cancel` button and connected it's `clicked` signal to `self.cancel()` slot. How do we implement this slot? Well, we will add a new slot to `WorkerThread` to handle this signal. 
 
 ```py
 class WorkerThread(QThread):
@@ -371,15 +369,11 @@ class MainWindow(QMainWindow):
     @Slot()
     def download(self):
         self.cancel_btn.setEnabled(True)
-
         # ...
-
-        self.cancelled.connect(self.worker_thread.stop_download)
-        self.worker_thread.start()
 
     @Slot()
     def cancel(self):
-        self.cancelled.emit()
+        self.worker_thread.stop_download()
         self.progress_bar.reset()
 
     @Slot()
@@ -391,39 +385,31 @@ class MainWindow(QMainWindow):
 {: .nolineno }
 {: file="demo-subclass-cancel.py" }
 
-
-Let's see if this works:  
-
-Todo: Add gif  
-
-One important point to note here is the constructor `__init__()` in `WorkerThread` will execute in the main thread (more on this later). That means the object `is_cancel` will have thread affinity of main thread and therefore we are writing to object from main thread while reading it's value from secondary thread!  
+Though this seem to work but there is an issue:  
 
 >*"It is generally unsafe to provide slots in your `QThread` subclass, unless you protect the member variables with a mutex."* -- [Qt Doc](https://doc.qt.io/qt-6/threads-qobject.html#accessing-qobject-subclasses-from-other-threads)
 {: .prompt-warning}
 
-Since it is a bad practice to have a slot in a subclass of QThread, we should move `stop_download()` slot to main thread with these changes  
+One important point to note here is the constructor `__init__()` in `WorkerThread` will execute in the main thread (more on this later). That means the object `is_cancel` will have thread affinity of main thread and therefore we are writing to object from main thread while reading it's value from secondary thread!  
+
+We will use `QMutex` to fix this issue. If you are reading a member variable in one thread and modifying it in another then alway make sure that member is protected with a mutex (or some other [synchronization mechanism](https://doc.qt.io/qt-6/threads-synchronizing.html)). Add `self.mutex = QMutex()` line to the `__init__()` method of `WorkerThread` and update the `stop_download()` slot as below
 
 ```py
+# It can just be a method and not a slot. We are not connecting any signals to  
+# it
 @Slot()
 def stop_download(self):
-    self.worker_thread.is_cancel = True
+    self.mutex.lock()
+    self.is_cancel = True
+    self.mutex.unlock()
 ```
 {: .nolineno}
 
-and in `MainWindow` replace
-```py
-self.cancelled.connect(self.worker_thread.stop_download) 
-``` 
-{: .nolineno}
+Tod: Add a gif
 
-with 
+This works like a charm! 
 
-```py
-self.cancelled.connect(self.stop_download)
-```
-{: .nolineno}
-
-Now let's modify second example file and see if it works...  
+Now let's modify second example file. As we know once `moveToThread()` is called on a `QObject` we can't just do `self.worker_thread.stop_download()` in `MainWindow().cancel()` slot. We will define a new signal `cancelled` in `MainWindow` class. This signal will be emitted in `cancel()` slot.
 
 ```py
 class Worker(QObject):
@@ -453,7 +439,6 @@ class Worker(QObject):
 
 class MainWindow(QMainWindow):
     cancelled = Signal()
-
     def __init__(self, *args, **kwargs):
         # ...
 
@@ -484,7 +469,7 @@ class MainWindow(QMainWindow):
 
 Todo: Add a gif
 
-As you can see, clicking `Cancel` is not doing what we expected to do! But, why? 
+As you can see, clicking `Cancel` is not doing what we expected it to do! But, why? 
 
 Let's understand why it worked for subclass approach but not for worker-object. 
 [Qt doc](https://doc.qt.io/qt-6/qthread.html#details) says for subclass approach  
@@ -493,19 +478,18 @@ Let's understand why it worked for subclass approach but not for worker-object.
 >
 >*Unlike queued slots or invoked methods, methods called directly on the `QThread` object will execute in the thread that calls the method. When subclassing `QThread`, keep in mind that the constructor executes in the old thread while `run()` executes in the new thread."*
 
-While download is in progress and managed by another thread, when we press `Cancel` button then the slot `stop_download()` will execute in the main thread (will have main thread affinity). Both of these jobs will be done in parallel.   
+While download is in progress and managed by new thread, when we press `Cancel` button then the slot `stop_download()` will execute in the main thread (will have main thread affinity). Both of these jobs will be done in parallel.   
 
 Unlike subclass approach where only code in `run()` method is executed in a separate thread, worker-object approach has different rule: 
 >*"Code inside the worker's slot will be executed in a separate thread."*  
 
 As I already said *a `QThread` object manages one thread of control*, therefore, slot `stop_download()` will execute in the new thread (same thread as of the `do_work()`). Since `do_work()` is a long job, the local event loop will be busy till this job finishes and all the incoming signals will be queued and hence the execution of slots. In other words `do_work()` is a blocking call in this new thread.  
 
-To make this work we need to use some [synchronization mechanism](https://doc.qt.io/qt-6/threads-synchronizing.html) to update `is_cancel` attribute (we will not discuss it in this blog).
-
 ## Conclusion
 
-For this particular app we built we can say that  
+For this particular app we built
 
 1. No event loop is needed
-2. No signals or slots are handled inside the secondary thread (we are emitting signals though)
-3. 
+2. No signals/slots need to be handled inside the secondary thread (we are emitting signals though)
+
+Building this app with event loop in worker thread is not easy. In this scenario subcalssing `QThread` is a way to go.
