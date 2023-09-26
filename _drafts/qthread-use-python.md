@@ -29,17 +29,22 @@ To use `QThread` correctly one has to understand the basics of this object. Let'
 
 ## What is an event Loop?
 
-An event loop is a loop that listen for any events like: user input, network traffic, sensors, timers etc. and dispatches these events to the target objects. In Qt, event loop starts when object's `exec()` method is called. `QApplication().exec()` starts the main event loop and wait until `exit()` is called. 
+An event loop is a loop that listen for any events like: user input, network traffic, sensors, timers etc. and dispatches these events to the target objects. In Qt, event loop starts when object's `exec()` method is called. `QApplication.exec()` starts the main event loop and wait until `exit()` is called. 
 
 >*"It is necessary to call this function to start event handling. The main event loop receives events from the window system and dispatches these to the application widgets."* -- [`exec()` doc](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QEventLoop.html#PySide6.QtCore.PySide6.QtCore.QEventLoop.exec)
-{: .prompt-info}  
+{: .prompt-info}    
+
+A Thread can also have its own event loop.  
+
+> An event loop in a thread makes it possible for the thread to use certain non-GUI Qt classes that require the presence of an event loop (such as `QTimer`, `QTcpSocket`, and `QProcess`). It also makes it possible to connect signals from any threads to slots of a specific thread.
+{: .prompt-info}
 
 ## What is a [thread affinity](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#thread-affinity)?
 
-A `QObject` instance is said to have a *thread affinity*, or that it *lives* in a certain thread. When a `QObject` receives a *queued signal* or a *posted event*, the slot or event handler will run in the thread that the object lives in.   
+A `QObject` instance is said to have a *thread affinity*, or that it *lives* in a certain thread. That means, when a `QObject` receives a *queued signal* or a *posted event*, the slot or event handler will run in the thread that the object lives in.   
 
 As documentation says:  
->*"By default, a `QObject` lives in the thread in which it is created. An object's thread affinity can be queried using thread() and changed using `moveToThread()`."*    
+>*"By default, a `QObject` lives in the thread in which it is created. An object's thread affinity can be queried using [`thread()`](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.PySide6.QtCore.QObject.thread) and changed using [`moveToThread()`](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.PySide6.QtCore.QObject.moveToThread)."*    
 
 When a `QObject` is moved to another thread, all its children will be automatically moved too.
 
@@ -54,7 +59,7 @@ When a `QObject` is moved to another thread, all its children will be automatica
 
 ## What is a QThread and How it works?
 
-If an expensive/blocking operation is performed in main thread then it causes UI to freeze. To avoid this problem this task need to move to a separate thread. Qt has `QThread` class to perform long no-GUI tasks in a separate thread.  
+If an expensive/blocking operation is performed in main thread then it causes UI to freeze. To avoid this problem this task need to move to a separate thread. Qt has `QThread` class to perform long non-GUI tasks in a separate thread.  
 
 >Never update GUI through a secondary thread. It should be done through main thread only.
 {: .prompt-warning}
@@ -63,12 +68,11 @@ Quoting from the [`QThread` doc](https://doc.qt.io/qtforpython-6/PySide6/QtCore/
 > *"A `QThread` object manages one thread of control within the program. `QThreads` begin executing in `run()`. By default, `run()` starts the event loop by calling `exec()` and runs a Qt event loop inside the thread."*
 
 Let's breakdown the above paragraph first,
-1. *A `QThread` object manages one thread of control*: Means if same thread is used to do two different long running tasks at the same time then they won't be done in parallel. One task has to wait for other to finish.
+1. *A `QThread` object manages one thread of control*: Yes, a **`QThread` is not actually a thread but a thread manager (manages one actual system thread)**.   
 
-2. *`QThread`s begin executing in `run()`*: When `QThread().start()` is called then it eventually calls `run()` method of `QThread` and then this `run()` method starts the actual thread. So, basically **`QThread` is not actually a thread but a wrapper around a thread**.  
+2. *`QThread`s begin executing in `run()`*: When `QThread.start()` is called then it eventually calls `run()` method of `QThread` and then this `run()` method starts the actual thread.
 
-3. *`run()` starts the event loop by calling `exec()` and runs a Qt event loop inside the thread*: A local event loop starts within the thread and wait until `exit()` is called. This event loop is optional (more on this later).
-
+3. *By default, `run()` starts the event loop by calling `exec()` and runs a Qt event loop inside the thread*: This event loop is optional. If re-implementation of `run()` doesn't call `exec()` then there will no event loop inside the thread.
 
 Let's create a simple toy app to demonstrate downloading a large file. This will have a simple progressbar and a push button. When user press the button download will start and at the same time progress bar will be updated showing the progress of the downloading file.
 
@@ -155,18 +159,9 @@ if __name__ == '__main__':
 This will have output below: 
 
 Todo: Add gif
-
-Important notes while using `QThread` subclass approach:  
-
-+ `QThread` instance lives in the old thread (main thread) that instantiated it, not in the new thread that calls `run()`
-+ `run()` executes the new thread, therefore only code inside `run()` will execute in the new thread. So you need to override this method  
-+ The thread will exit after the `run()` function has returned 
-+ There will not be any event loop running in the thread unless you call `exec()`
-
-
 ![qthread-1](/assets/img/media/qthread-1.png){: width="400" height="50}
 
-Let's start with `WorkerThread`, a subclass of `QThread`. 
+Let's walkthrough the above code. We defined `WorkerThread` class, a subclass of `QThread`
 
 ```py
 class WorkerThread(QThread):
@@ -189,7 +184,7 @@ class WorkerThread(QThread):
 ```
 {: .nolineno }
 
-We reimplemented `QThread().run()` method which calls `do_work` method. `do_work` looping 5 times and emitting a custom signal called `progress` and then sleeps for 1 second to imitate a long running job.
+We reimplemented `QThread().run()` method which calls `do_work` method. `do_work` inside a loop is emitting a custom signal called `progress` and then sleeps for 1 second to imitate a long running job.
 
 The `download_btn` in `MainWindow` class is connected to a slot `download()`.
 
@@ -209,9 +204,17 @@ The `download_btn` in `MainWindow` class is connected to a slot `download()`.
 ```
 {: .nolineno }
 
-In this slot an instance of `WorkerThread` is instantiated and it's custom signal `progress` and builtin signal `finished` is connected to the required slots. Finally, a call to `worker_thread.start()` will eventually call `run()` and run a separate thread to complete `do_work()`. There will not be any event loop running in this thread. This is a simple working example. 
+An instance of `WorkerThread` is instantiated in this slot and it's custom signal `progress` and builtin signal `finished` is connected to the required slots. Finally, a call to `worker_thread.start()` will eventually call `run()` and run a separate thread to complete `do_work()`. There will not be any event loop running in this thread.  
+
+Important notes when using `QThread` subclass approach:  
+
++ `QThread` instance (`worker_thread`) lives in the old thread (main thread) that instantiated it, not in the new thread that calls `run()`
++ `run()` executes the new thread, therefore only code inside `run()` will execute in the new thread. So you need to override this method  
++ The thread will exit after the `run()` function has returned 
++ There will not be any event loop running in the thread unless you call `exec()` inside `run()`
 
 ### 2. Worker-Object approach (with event loop)  
+We will define a worker class, a subclass of `QObject`. This class will have a slot `do_work()` and will do the expensive task.  
 
 >*"The code inside the Worker's slot would then execute in a separate thread."*
 {: .prompt-info}
@@ -307,18 +310,20 @@ While using *worker-object* approach you need to take care of these things:
 
 + Make sure the lifetime of `worker` object is as same as the `worker_thread` or beyond. Making `worker` an attribute of `MainWindow` class is intentional. If you do `worker = Worker(num)` then lifetime of this object will be done before executing `do_work` in the new thread 
 
-+ Make sure [`worker` must not have any parents](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.PySide6.QtCore.QObject.moveToThread) else it can't be moved to the `worker_thread` 
++ Make sure [`worker` must not have any parents](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.PySide6.QtCore.QObject.moveToThread) else it can't be moved to the new thread (the one started by `run()`)
 
 + `worker_thread` lives in main thread, i.e. it has thread affinity of main thread (the one it has been instantiated)  
 
 <!-- + Notice that `moveToThread()` is called before connecting to any signals. Always move `worker` to the `worker-thread` before connecting signals -->
 
-+ Though `worker` is instantiated in main thread, after call to `moveToThread()`, `worker` object will live in the `worker_thread` (i.e. all the events for `worker` object will be handled in `worker_thread`)
++ Though `worker` is instantiated in main thread, after call to `moveToThread()`, `worker` object will live in the new thread (i.e. all the signals/events for `worker` object will be handled in the new thread)
 <!-- (more details [here](https://doc.qt.io/qt-6/threads-qobject.html#per-thread-event-loop))  -->
 
-+ A custom signal `worker.finished()` is used to call the `finish()` slot and not the builtin `worker_thread.finished()`, why?  Because thread hosts an event loop, and it never quits (so no finished signal emitted by the thread object) until terminated manually by the `worker` object.    
++ A custom signal `worker.finished()` is used to call the `finish()` slot and not the builtin `worker_thread.finished()`, why?  Because thread hosts an event loop, and it never quits (so no finished signal emitted by the thread object) until terminated manually by the `worker` object.  
 
-### 3. Modifying examples to abort the download  
++ Slots of `worker` instance is invoked in the new thread, but if this is called as normal member function then it will be invoked in the main thread.
+
+### 3. Modifying examples to abort the download: Todo 
 
 So far so good. Let's add one more functionality to our small app, a cancel button. This will give users an option to cancel the download in between. First let's modify the first example `demo-subclass.py`{: .filepath}. If possible, we will try to achieve the same for second example! 
 
@@ -489,7 +494,7 @@ Unlike subclass approach where only code in `run()` method is executed in a sepa
 
 >*"Code inside the worker's slot will be executed in a separate thread."*  
 
-As we already know *a `QThread` object manages one thread of control*, therefore, slot `stop_download()` will execute in the new thread (same thread as of the `do_work()`). Since `do_work()` is a blocking task, the local event loop will be busy till this job finishes and all the incoming signals will be queued and hence the execution of slots. In other words `do_work()` is a blocking call in this new thread.  
+Slot `stop_download()` will execute in the worker thread. Since `do_work()` is a blocking task, till this job finishes, the local event loop will wait to get back the control and meanwhile all the incoming signals will be queued in the event-queue of the worker thread. The slot `stop_download()` is invoked only after control returns to the event loop of the thread `worker_thread` is managing.
 
 ## Conclusion
 
@@ -498,9 +503,11 @@ For this particular app we built
 1. No event loop is needed
 2. No signals/slots need to be handled inside the secondary thread (we are emitting signals though)
 
-Building this app with event loop in worker thread is not easy. In this scenario subcalssing `QThread` is a way to go.  
+Building this app with event loop in worker thread is not easy. In this scenario subcalssing `QThread` is a way to go.   
+
+Slots should not be implemented directly into a subclassed `QThread`.
 
 When to use worker-object approach?   
-1. When you need an event loop in `QThread`. Certain non GUI classes (such as `QTimer`, `QTcpSocket`, and `QProcess`) requires the presence of event loop. If you are using instances of these classes in your thread then you will have yo use worker-object approach.  
+1.*When you need an event loop in `QThread`*. Certain non GUI classes (such as `QTimer`, `QTcpSocket`, and `QProcess`) requires the presence of event loop. If you are using instances of these classes in your thread then you will have to use worker-object approach.  
 
-2. If you have to handle signals/slots in the secondary thread.
+2. *If you have to handle signals/slots in the secondary thread*.
