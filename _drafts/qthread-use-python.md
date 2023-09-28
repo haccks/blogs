@@ -41,7 +41,7 @@ A Thread can also have its own event loop.
 
 ## What is a [thread affinity](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#thread-affinity)?
 
-A `QObject` instance is said to have a *thread affinity*, or that it *lives* in a certain thread. That means, when a `QObject` receives a *queued signal* or a *posted event*, the slot or event handler will run in the thread that the object lives in.   
+A `QObject` instance is said to have a *thread affinity*, or that it *lives* in a certain thread. That means, when a `QObject` receives a *queued signal* or a *posted event*, the slot or event handler will run in the thread that the object lives in.
 
 As documentation says:  
 >*"By default, a `QObject` lives in the thread in which it is created. An object's thread affinity can be queried using [`thread()`](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.PySide6.QtCore.QObject.thread) and changed using [`moveToThread()`](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.PySide6.QtCore.QObject.moveToThread)."*    
@@ -115,8 +115,8 @@ class MainWindow(QMainWindow):
 
         # setup widget
         self.widget = QWidget()
-        layout = QVBoxLayout()
-        self.widget.setLayout(layout)
+        layout_v = QVBoxLayout()
+        self.widget.setLayout(layout_v)
         self.setCentralWidget(self.widget)
 
         self.progress_bar = QProgressBar(self)
@@ -125,8 +125,8 @@ class MainWindow(QMainWindow):
         self.download_btn = QPushButton(text='Download')
         self.download_btn.clicked.connect(self.download)
 
-        layout.addWidget(self.progress_bar)
-        layout.addWidget(self.download_btn)
+        layout_v.addWidget(self.progress_bar)
+        layout_v.addWidget(self.download_btn)
 
         self.show()
 
@@ -206,7 +206,7 @@ The `download_btn` in `MainWindow` class is connected to a slot `download()`.
 
 An instance of `WorkerThread` is instantiated in this slot and it's custom signal `progress` and builtin signal `finished` is connected to the required slots. Finally, a call to `worker_thread.start()` will eventually call `run()` and run a separate thread to complete `do_work()`. There will not be any event loop running in this thread.  
 
-Important notes when using `QThread` subclass approach:  
+When you subclass `QThread` then keep in mind:  
 
 + `QThread` instance (`worker_thread`) lives in the old thread (main thread) that instantiated it, not in the new thread that calls `run()`
 + `run()` executes the new thread, therefore only code inside `run()` will execute in the new thread. So you need to override this method  
@@ -254,21 +254,21 @@ class MainWindow(QMainWindow):
 
         # setup widget
         self.widget = QWidget()
-        layout = QVBoxLayout()
-        self.widget.setLayout(layout)
+        layout_v = QVBoxLayout()
+        self.widget.setLayout(layout_v)
         self.setCentralWidget(self.widget)
 
         self.progress_bar = QProgressBar(self)
         self.progress_bar.setValue(0)
 
-        self.btn_start = QPushButton('Download', clicked=self.start)
+        self.btn_start = QPushButton('Download', clicked=self.download)
 
-        layout.addWidget(self.progress_bar)
-        layout.addWidget(self.btn_start)
+        layout_v.addWidget(self.progress_bar)
+        layout_v.addWidget(self.btn_start)
 
         self.show()
 
-    def start(self):
+    def download(self):
         num = 5
         self.btn_start.setEnabled(False)
         self.progress_bar.reset()
@@ -281,7 +281,8 @@ class MainWindow(QMainWindow):
         self.worker.progress.connect(self.progress_bar.setValue)
         self.worker.finished.connect(self.finished)
         self.worker_thread.started.connect(self.worker.do_work)
-        self.worker_thread.finished.connect(self.worker.deleteLater())
+        self.worker_thread.finished.connect(self.worker.deleteLater)
+        self.worker_thread.finished.connect(self.worker_thread.deleteLater)
 
         # Won't work!
         # Because thread hosts an event loop, and it never
@@ -325,15 +326,15 @@ While using *worker-object* approach you need to take care of these things:
 
 ### 3. Modifying examples to abort the download: Todo 
 
-So far so good. Let's add one more functionality to our small app, a cancel button. This will give users an option to cancel the download in between. First let's modify the first example `demo-subclass.py`{: .filepath}. If possible, we will try to achieve the same for second example! 
+So far so good. Let's add one more functionality to our small app, a cancel button. This will give users an option to cancel the download in between.   
 
-Update `__init__()` method in `MainWindow` class  
+Let's add a `Cancel` button to the app. Update `__init__()` method in `MainWindow` class (in both examples) 
 
 ```py
     #...
 
     self.cancel_btn = QPushButton(text='Cancel')
-    self.cancel_btn.clicked.connect(self.cancel)
+    # self.cancel_btn.clicked.connect(self.cancel)
 
     self.container_frame = QFrame()
     layout_h = QHBoxLayout()
@@ -350,10 +351,9 @@ Update `__init__()` method in `MainWindow` class
 ```
 {: .nolineno }
 
-We added a `Cancel` button and connected it's `clicked` signal to `self.cancel()` slot. This slot will call `WorkerThread().stop_download()` method from main thread.
-
+Make the following changes in `WorkerThread` class of `demo-subclass.py` {: .filepath}
 ```py
-class WorkerThread(QThread):
+def WorkerThread(QThread)
     progress = Signal(int)
 
     def __init__(self, n):
@@ -361,7 +361,7 @@ class WorkerThread(QThread):
         self.n = n
         self.is_cancel = False
 
-    def stop_download(self):  # Not a slot!
+    def stop_download(self):
         self.is_cancel = True
 
     def do_work(self):
@@ -370,9 +370,8 @@ class WorkerThread(QThread):
                 break
             self.progress.emit(i)
             time.sleep(1)
-
+   
     # ...
-    
 
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -383,28 +382,28 @@ class MainWindow(QMainWindow):
         self.cancel_btn.setEnabled(True)
         # ...
 
-    @Slot()
-    def cancel(self):
-        self.worker_thread.stop_download()
-        self.progress_bar.reset()
+        self.cancel_btn.clicked.connect(self.worker.stop_download)
+        self.worker_thread.start()
 
     @Slot()
     def finished(self):
         self.download_btn.setEnabled(True)
         self.cancel_btn.setEnabled(False)
+        self.progress_bar.reset()
 
 ```
 {: .nolineno }
 {: file="demo-subclass-cancel.py" }
+<sub>[Code on github]()</sub>
 
 Todo: Add a gif
 
 <!-- >*"It is generally unsafe to provide slots in your `QThread` subclass, unless you protect the member variables with a mutex."* -- [Qt Doc](https://doc.qt.io/qt-6/threads-qobject.html#accessing-qobject-subclasses-from-other-threads)
 {: .prompt-warning} -->  
 
-While download is in progress and managed by worker thread, when we press `Cancel` button then the method `stop_download()` will execute in the main thread (`worker_thread` lives in main thread and hence the method`stop_download()`). Both of these jobs will be done in parallel.   
+As we already know "only code inside `run()` will execute in a separate thread". While download is in progress and managed by worker thread, when we press `Cancel` button then the method `stop_download()` will execute in the main thread (`worker_thread` lives in main thread and hence the method`stop_download()`). Both of these jobs will be done in parallel.   
 
-Note that we are setting `worker_thread.is_cancel` from main thread (through `cancel()` slot) while reading its value in worker thread, is this a problem? Not really. In this case `is_cancel` is a boolean and is thread safe as it does not involve any *non-atomic operations* and is modified by main thread only. (More info [here](https://stackoverflow.com/a/77173551/2455888))
+Note that we are setting `worker_thread.is_cancel` from main thread while reading its value in worker thread, is this a problem? Not really. In this case `is_cancel` is a boolean and is thread safe as it does not involve any *non-atomic operations* and is modified by main thread only. (More info [here](https://stackoverflow.com/a/77173551/2455888))
 
  But when in doubt, you can use mutex. If you wish, add `self.mutex = QMutex()` line to the `__init__()` method of `WorkerThread` and update the `stop_download()` slot as below
 
@@ -416,10 +415,70 @@ def stop_download(self):
 ```
 {: .nolineno}
 
-Modification to second example will be similar, just replace `self.worker_thread.stop_download()` by `self.worker.stop_download()` in `cancel()` slot. ([code on github]())
+ Let's modify `demo-worker-object.py` {: .filepath } file as follows
+
+ ```py
+ class Worker(QObject):
+    progress = Signal(int)
+    finished = Signal()
+
+    def __init__(self, n):
+        super().__init__()
+        self.n = n
+        self.is_cancel = False
+
+    @Slot()
+    def stop_download(self):
+        print('Stop requested!')
+        self.is_cancel = True
+
+    @Slot()
+    def do_work(self):
+        for i in range(1, self.n + 1):
+            if self.is_cancel:
+                break
+            self.progress.emit(i)
+            time.sleep(1)
+
+        self.finished.emit()
 
 
-Now let's modify second example file. We will define a new signal `cancelled` in `MainWindow` class. This signal will be emitted in `cancel()` slot.
+class MainWindow(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        # ...
+
+    @Slot()
+    def download(self):
+        self.cancel_btn.setEnabled(True)
+        # ...
+
+        self.cancel_btn.clicked.connect(self.worker.stop_download)
+        self.worker_thread.start()
+
+    @Slot()
+    def finished(self):
+        self.download_btn.setEnabled(True)
+        self.cancel_btn.setEnabled(False)
+        self.worker_thread.quit()
+        self.worker_thread.wait()
+        self.progress_bar.reset()
+ 
+ ```
+{: .nolineno }
+{: file="demo-subclass-cancel.py" }  
+
+Todo: Add a gif  
+
+As you can see, clicking `Cancel` is not doing what we expected it to do! *But, why?* 
+
+Unlike subclass approach where only code in `run()` method is executed in a separate thread, worker-object approach has different rule: 
+
+>*"Code inside the worker's slot will be executed in a separate thread."*  
+
+Slot `stop_download()` will execute in the worker thread. Since `do_work()` is a blocking task, till this job finishes, the local event loop will wait to get back the control and meanwhile all the incoming signals will be queued in the event-queue of the worker thread. The slot `stop_download()` is invoked only after control returns to the event loop of the thread `worker_thread` is managing.
+
+
+To fix this problem somehow we need to invoke `stop_download()` from main thread. We will add a new signal `cancelled` in `MainWindow` class and a new slot `cancel()`. This signal will be emitted in `cancel()` slot.
 
 ```py
 class Worker(QObject):
@@ -433,7 +492,6 @@ class Worker(QObject):
 
     @Slot()
     def stop_download(self):
-        print('cancel signal emitted')
         self.is_cancel = True
 
     @Slot()
@@ -458,13 +516,12 @@ class MainWindow(QMainWindow):
 
         # ...
 
-        self.cancelled.connect(self.worker_thread.stop_download)
+        self.cancel_btn.clicked.connect(self.cancel)
         self.worker_thread.start()
 
     @Slot()
     def cancel(self):
-        self.cancelled.emit()
-        self.progress_bar.reset()
+         self.worker.stop_download()
 
     @Slot()
     def finished(self):
@@ -472,40 +529,26 @@ class MainWindow(QMainWindow):
         self.cancel_btn.setEnabled(False)
         self.worker_thread.quit()
         self.worker_thread.wait()
+        self.progress_bar.reset()
 
 ```
 {: .nolineno }
 {: file="demo-worker-object-cancel.py" }
 
+<sub>[Code on github]()</sub>
+
 Todo: Add a gif
 
-As you can see, clicking `Cancel` is not doing what we expected it to do! But, why? 
-
-<!-- Let's understand why it worked for subclass approach but not for worker-object. 
-[Qt doc](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QThread.html#detailed-description) says for subclass approach  
-
->*"It is important to remember that a `QThread` instance lives in the old thread that instantiated it, not in the new thread that calls `run()`. This means that all of `QThread`'s queued slots and invoked methods will execute in the old thread.*  
->
->*Unlike queued slots or invoked methods, methods called directly on the `QThread` object will execute in the thread that calls the method. When subclassing `QThread`, keep in mind that the constructor executes in the old thread while `run()` executes in the new thread."* -->
-
-<!-- While download is in progress and managed by worker thread, when we press `Cancel` button then the slot `stop_download()` will execute in the main thread (will have main thread affinity). Both of these jobs will be done in parallel.    -->
-
-Unlike subclass approach where only code in `run()` method is executed in a separate thread, worker-object approach has different rule: 
-
->*"Code inside the worker's slot will be executed in a separate thread."*  
-
-Slot `stop_download()` will execute in the worker thread. Since `do_work()` is a blocking task, till this job finishes, the local event loop will wait to get back the control and meanwhile all the incoming signals will be queued in the event-queue of the worker thread. The slot `stop_download()` is invoked only after control returns to the event loop of the thread `worker_thread` is managing.
+Note that `cancel_btn.clicked` signal is not connected to `worker.stop_download()` slot rather it is connected to `cancel()` slot of `MainWindow`. Since `cancel()` is invoked in main thread and hence it will invoke `worker.stop_download()` as a normal method in main thread instead of worker thread.
 
 ## Conclusion
 
-For this particular app we built
+For this particular app both approach has been used. But as we can see, for this app
 
 1. No event loop is needed
 2. No signals/slots need to be handled inside the secondary thread (we are emitting signals though)
 
-Building this app with event loop in worker thread is not easy. In this scenario subcalssing `QThread` is a way to go.   
-
-Slots should not be implemented directly into a subclassed `QThread`.
+In such case where you want to perform some expensive operation in another thread, where the thread does not need to receive any signals or events, subcalss `QThread`.
 
 When to use worker-object approach?   
 1.*When you need an event loop in `QThread`*. Certain non GUI classes (such as `QTimer`, `QTcpSocket`, and `QProcess`) requires the presence of event loop. If you are using instances of these classes in your thread then you will have to use worker-object approach.  
