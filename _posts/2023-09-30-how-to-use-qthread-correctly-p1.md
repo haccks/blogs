@@ -332,4 +332,4 @@ While using *worker-object* approach you have to keep in mind:
 
 + Slots of `worker` instance is invoked in the new thread, but if this is called as normal member function from main thread then it will be invoked in the main thread.
 
-<!-- *[Continued...](https://www.haccks.com/posts/how-to-use-qthread-correctly-p2/)* -->
+*[Continued...](https://www.haccks.com/posts/how-to-use-qthread-correctly-p2/)*
