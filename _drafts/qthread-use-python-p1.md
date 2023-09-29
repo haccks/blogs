@@ -1,5 +1,5 @@
 ---
-title: How to use QThread correctly?
+title: How to use QThread correctly (part 1)?
 description: "Whether one should subclass QThread or use worker object and move it to the thread depends on the use case"
 date: 2023-05-18 14:00:00 +0530
 categories: [python]
@@ -27,7 +27,7 @@ As of the newest release of Qt (Qt6 at the time of writing this blog), documenta
 
 Lets start with some basics
 
-## What is an event Loop?
+## What is an Event Loop?
 
 An event loop is a loop that listen for any events like: user input, network traffic, sensors, timers etc. and dispatches these events to the target objects. In Qt, event loop starts when object's `exec()` method is called. `QApplication.exec()` starts the main event loop and wait until `exit()` is called.
 
@@ -39,11 +39,14 @@ A Thread can also have its own event loop.
 > An event loop in a thread makes it possible for the thread to use certain non-GUI Qt classes that require the presence of an event loop (such as `QTimer`, `QTcpSocket`, and `QProcess`). It also makes it possible to connect signals from any threads to slots of a specific thread.
 {: .prompt-info}
 
-## What is a [thread affinity](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#thread-affinity)?
+## What is [Thread Affinity](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#thread-affinity)?
 
-A `QObject` instance is said to have a *thread affinity*, or that it *lives* in a certain thread. That means, when a `QObject` receives a *queued signal* or a *posted event*, the slot or event handler will run in the thread that the object lives in.
+A `QObject` instance is said to have a *thread affinity*, or that it *lives* in a certain thread. That means, when a `QObject` receives a *queued signal* or a *posted event*, the slot or event handler will run in the thread that the object lives in. 
 
-As documentation says:  
+>Queued signals or posted events are handled in receiver's thread (the thread the object lives in).
+{: .prompt-info}
+
+Note that:  
 >*"By default, a `QObject` lives in the thread in which it is created. An object's thread affinity can be queried using [`thread()`](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.PySide6.QtCore.QObject.thread) and changed using [`moveToThread()`](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.PySide6.QtCore.QObject.moveToThread)."*    
 
 When a `QObject` is moved to another thread, all its children will be automatically moved too.
@@ -90,8 +93,8 @@ Let's create a simple toy app to demonstrate downloading a large file. This will
 ```py
 import sys
 import time
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, \
-    QPushButton, QVBoxLayout, QProgressBar
+from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget,  
+                               QPushButton, QVBoxLayout, QProgressBar)
 from PySide6.QtCore import QThread, Signal, Slot
 
 
@@ -162,7 +165,7 @@ if __name__ == '__main__':
 ```
 {: file="demo-subclass.py" }
 
-This will have output below: 
+This will have following output: 
 
 Todo: Add gif
 ![qthread-1](/assets/img/media/qthread-1.png){: width="400" height="50}
@@ -183,14 +186,15 @@ class WorkerThread(QThread):
             time.sleep(1)
             
     def run(self):
-        """Override run method
-        Note that we are not calling `exec()` here so there will not be any local event loop to this thread!
+        # Note that we are not calling `exec()` here so
+        # there will not be any local event loop to this thread!
+        """Override run method 
         """
         self.do_work()
 ```
 {: .nolineno }
 
-We reimplemented `QThread().run()` method which calls `do_work` method. `do_work` inside a loop is emitting a custom signal called `progress` and then sleeps for 1 second to imitate a long running job.
+We reimplemented `QThread.run()` method which calls `do_work` method. `do_work` inside a loop is emitting a custom signal called `progress` and then sleeps for 1 second to imitate a long running job.
 
 The `download_btn` in `MainWindow` class is connected to a slot `download()`.
 
@@ -212,12 +216,13 @@ The `download_btn` in `MainWindow` class is connected to a slot `download()`.
 
 An instance of `WorkerThread` is instantiated in this slot and it's custom signal `progress` and builtin signal `finished` is connected to the required slots. Finally, a call to `worker_thread.start()` will eventually call `run()` and run a separate thread to complete `do_work()`. There will not be any event loop running in this thread.  
 
-When you subclass `QThread` then keep in mind:  
-
-+ `QThread` instance (`worker_thread`) lives in the old thread (main thread) that instantiated it, not in the new thread that calls `run()`
-+ `run()` executes the new thread, therefore only code inside `run()` will execute in the new thread. So you need to override this method  
-+ The thread will exit after the `run()` function has returned 
-+ There will not be any event loop running in the thread unless you call `exec()` inside `run()`
+>
+>When you subclass `QThread` then keep in mind:  
+>
+>+ `QThread` instance (`worker_thread`) lives in the old thread (main thread) that instantiated it, not in the new thread that calls `run()`
+>+ `run()` executes the new thread, therefore only code inside `run()` will execute in the new thread. So you need to override this method  
+>+ The thread will exit after the `run()` function has returned 
+>+ There will not be any event loop running in the thread unless you call `exec()` inside `run()`
 
 ### 2. Worker-Object approach (with event loop)  
 We will define a worker class, a subclass of `QObject`. This class will have a slot `do_work()` and will do the expensive task.  
@@ -225,7 +230,7 @@ We will define a worker class, a subclass of `QObject`. This class will have a s
 >*"The code inside the Worker's slot would then execute in a separate thread."*
 {: .prompt-info}
 
-We can use worker-object approach to build the same app.  
+We can use the worker-object approach to build the same app.  
 
 ```py
 import sys
@@ -244,7 +249,7 @@ class Worker(QObject):
         self.n = n
 
     @Slot()
-    def do_work(self):
+    def do_work(self):  # Long running task
         for i in range(1, self.n+1):
             time.sleep(1)
             self.progress.emit(i)
@@ -313,7 +318,7 @@ if __name__ == '__main__':
 ```
 {: file="demo-worker-object.py" }  
 
-While using *worker-object* approach you need to take care of these things:  
+While using *worker-object* approach you have to keep in mind:  
 
 + Make sure the lifetime of `worker` object is as same as the `worker_thread` or beyond. Making `worker` an attribute of `MainWindow` class is intentional. If you do `worker = Worker(num)` then lifetime of this object will be done before executing `do_work` in the new thread 
 
@@ -321,16 +326,15 @@ While using *worker-object* approach you need to take care of these things:
 
 + `worker_thread` lives in main thread, i.e. it has thread affinity of main thread (the one it has been instantiated)  
 
-<!-- + Notice that `moveToThread()` is called before connecting to any signals. Always move `worker` to the `worker-thread` before connecting signals -->
-
 + Though `worker` is instantiated in main thread, after call to `moveToThread()`, `worker` object will live in the new thread (i.e. all the signals/events for `worker` object will be handled in the new thread)
-<!-- (more details [here](https://doc.qt.io/qt-6/threads-qobject.html#per-thread-event-loop))  -->
 
 + A custom signal `worker.finished()` is used to call the `finish()` slot and not the builtin `worker_thread.finished()`, why?  Because thread hosts an event loop, and it never quits (so no finished signal emitted by the thread object) until terminated manually by the `worker` object.  
 
-+ Slots of `worker` instance is invoked in the new thread, but if this is called as normal member function then it will be invoked in the main thread.
++ Slots of `worker` instance is invoked in the new thread, but if this is called as normal member function from main thread then it will be invoked in the main thread.
 
-### 3. Modifying examples to abort the download: Todo 
+*[Continued...]()*
+
+<!-- ### 3. Modifying examples to abort the download
 
 So far so good. Let's add one more functionality to our small app, a cancel button. This will give users an option to cancel the download in between.   
 
@@ -404,10 +408,7 @@ class MainWindow(QMainWindow):
 
 Todo: Add a gif
 
-<!-- >*"It is generally unsafe to provide slots in your `QThread` subclass, unless you protect the member variables with a mutex."* -- [Qt Doc](https://doc.qt.io/qt-6/threads-qobject.html#accessing-qobject-subclasses-from-other-threads)
-{: .prompt-warning} -->  
-
-As we already know "only code inside `run()` will execute in a separate thread". While download is in progress and managed by worker thread, when we press `Cancel` button then the method `stop_download()` will execute in the main thread (`worker_thread` lives in main thread and hence the method`stop_download()`). Both of these jobs will be done in parallel.   
+I already mentioned that *"only code inside `run()` will execute in a separate thread"*. While download is in progress and managed by worker thread, when we press `Cancel` button then the method `stop_download()` will execute in the main thread (`worker_thread` lives in main thread and hence the method`stop_download()`). Both of these jobs will be done in parallel.   
 
 Note that we are setting `worker_thread.is_cancel` from main thread while reading its value in worker thread, is this a problem? Not really. In this case `is_cancel` is a boolean and is thread safe as it does not involve any *non-atomic operations* and is modified by main thread only. (More info [here](https://stackoverflow.com/a/77173551/2455888))
 
@@ -483,8 +484,7 @@ Unlike subclass approach where only code in `run()` method is executed in a sepa
 
 Slot `stop_download()` will execute in the worker thread. Since `do_work()` is a blocking task, till this job finishes, the local event loop will wait to get back the control and meanwhile all the incoming signals will be queued in the event-queue of the worker thread. The slot `stop_download()` is invoked only after control returns to the event loop of the thread `worker_thread` is managing.
 
-
-To fix this problem somehow we need to invoke `stop_download()` from main thread. We will add a new signal `cancelled` in `MainWindow` class and a new slot `cancel()`. This signal will be emitted in `cancel()` slot.
+We can fix this problem by invoking `stop_download()` from main thread. We will add a new signal `cancelled` in `MainWindow` class and a new slot `cancel()`. This signal will be emitted in `cancel()` slot.
 
 ```py
 class Worker(QObject):
@@ -545,7 +545,107 @@ class MainWindow(QMainWindow):
 
 Todo: Add a gif
 
-Note that `cancel_btn.clicked` signal is not connected to `worker.stop_download()` slot rather it is connected to `cancel()` slot of `MainWindow`. Since `cancel()` is invoked in main thread and hence it will invoke `worker.stop_download()` as a normal method in main thread instead of worker thread.
+Note that `cancel_btn.clicked` signal is not connected to `worker.stop_download()` slot rather it is connected to `cancel()` slot of `MainWindow`. Since `cancel()` is invoked in main thread and hence it will invoke `worker.stop_download()` as a normal method in main thread instead of worker thread.  
+
+### Using a non-GUI Qt class in secondary thread 
+
+As I already mentioned [`QTimer`](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QTimer.html) is a non-GUI class and it requires an event loop. Suppose we need to do something periodically in a secondary thread. Let's try `QThread` subclass approach 
+
+```py
+import sys
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QThread, qDebug, QTimer, Slot
+
+
+class WorkerThread(QThread):
+    @Slot()
+    def on_timeout(self):
+        qDebug(f"on_timeout() called from thread: {self.currentThread()}")
+
+    def do_work(self):
+        qDebug(f"Worker thread: {self.currentThread()}")
+        timer = QTimer()
+        timer.timeout.connect(self.on_timeout)
+        timer.start(1000)  # Start the timer and emit timeout() signal every second.
+        self.exec()        # Start the event loop.
+
+    def run(self):
+        self.do_work()
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    worker_thread = WorkerThread()
+    worker_thread.start()
+    qDebug(f"Main thread: {worker_thread.currentThread()}")
+    app.exec()
+
+```
+{: .file=qtimer-subclass.py}
+
+This will produce the output like 
+
+```
+Main thread: <PySide6.QtCore.QThread(0x6000004cf8c0) at 0x10de67440>
+Worker thread: <__main__.WorkerThread(0x6000006c5ea0) at 0x10de67340>
+on_timeout() called from thread: <PySide6.QtCore.QThread(0x6000004cf8c0) at 0x10de67680>
+on_timeout() called from thread: <PySide6.QtCore.QThread(0x6000004cf8c0) at 0x10de675c0>
+on_timeout() called from thread: <PySide6.QtCore.QThread(0x6000004cf8c0) at 0x10de67680>
+...
+```
+Notice the id of main thread is `0x6000004cf8c0` and `on_timeout()` is running in this thread. But, we expected to run `on_timeout()` in secondary thread. Why this behavior?   
+As mentioned earlier, `worker_thread` lives in main thread. So, when secondary thread emits `timer.timeout`signal and it is received in main thread. Therefore, Slot `worker_thread.on_timeout()` is handled by the main thread signal handler, not by secondary thread signal handler and therefore slot `on_timeout()` is executed in main thread.  
+
+>Queued signals are handled in receiver's thread.
+{: .prompt-info}
+
+Using worker-object approach will will help us to execute to execute the periodic task in secondary thread.  
+
+```py
+import sys
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QThread, qDebug, QTimer, QObject, Slot
+
+
+class Worker(QObject):
+    @Slot()
+    def on_timeout(self):
+        qDebug(f"on_timeout() called from thread: "
+               f"{self.thread()}")
+
+    @Slot()
+    def do_work(self):
+        qDebug(f"Worker thread: {self.thread()}")
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.on_timeout)
+        self.timer.start(1000)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    worker = Worker()
+    worker_thread = QThread()
+    worker.moveToThread(worker_thread)
+    worker_thread.started.connect(worker.do_work)
+    worker_thread.start()
+
+    qDebug(f"Main thread: {worker_thread.thread()}")
+    app.exec()
+
+```
+{: .file=qtimer-worker-object.py}
+And the output  
+
+```
+Main thread: <PySide6.QtCore.QThread(0x600002bd0300) at 0x10de12940>
+Worker thread: <PySide6.QtCore.QThread(0x6000029fb560) at 0x10de12740>
+on_timeout() called from thread: <PySide6.QtCore.QThread(0x6000029fb560) at 0x10de12740>
+on_timeout() called from thread: <PySide6.QtCore.QThread(0x6000029fb560) at 0x10de12740>
+on_timeout() called from thread: <PySide6.QtCore.QThread(0x6000029fb560) at 0x10de12740>
+...
+```
+As you can see `worker.on_timeout()` is running in secondary thread.
+
 
 ## Conclusion
 
@@ -558,9 +658,6 @@ In such case where you want to perform some expensive operation in another threa
 
 **When to use worker-object approach?**   
 
-1. *When you need an event loop in `QThread`*. Certain non GUI classes (such as `QTimer`, `QTcpSocket`, and `QProcess`) requires the presence of event loop. If you are using instances of these classes in your thread then you will have to use worker-object approach.  
+1. *When you need an event loop in `QThread`*. Certain non-GUI classes (such as `QTimer`, `QTcpSocket`, and `QProcess`) requires the presence of event loop. If you are using instances of these classes in your thread then you will have to use worker-object approach.  
 
-2. *If you have to handle signals/slots in the secondary thread*.
-
-I will close this blog by giving an example where only worker-object will work but not subclassing the `QThread`.  
-
+2. *If you have to handle signals/slots in the secondary thread*. -->
