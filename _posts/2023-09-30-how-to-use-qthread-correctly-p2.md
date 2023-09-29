@@ -83,7 +83,7 @@ class MainWindow(QMainWindow):
 ```
 {: .nolineno }
 {: file="demo-subclass-cancel.py" }
-<sub>[Code on github]()</sub>
+<!-- <sub>[Code on github]()</sub> -->
 
 Todo: Add a gif
 
@@ -222,7 +222,7 @@ class MainWindow(QMainWindow):
 {: .nolineno }
 {: file="demo-worker-object-cancel.py" }
 
-<sub>[Code on github]()</sub>
+<!-- <sub>[Code on github]()</sub> -->
 
 Todo: Add a gif
 
