@@ -59,10 +59,16 @@ When a `QObject` is moved to another thread, all its children will be automatica
 
 ## What is a QThread and How it works?
 
-If an expensive/blocking operation is performed in main thread then it causes UI to freeze. To avoid this problem this task need to move to a separate thread. Qt has `QThread` class to perform long non-GUI tasks in a separate thread.  
+Each program has one thread when it is started. This thread is called the *main thread* (also known as the *GUI thread* in Qt applications). The Qt GUI must run in this thread.  
+
+A *secondary thread* is commonly referred to as a *worker thread* because it is used to offload processing work from the main thread.   
 
 >Never update GUI through a secondary thread. It should be done through main thread only.
 {: .prompt-warning}
+
+If some expensive/blocking operations are performed in main thread then it will cause UI to freeze. We can offload such operations to other threads. By offloading long lasting processing or blocking calls to other threads we can keep the GUI thread or other time critical threads responsive.
+
+Qt has `QThread` class to manage such threads (secondary threads) that perform long non-GUI tasks.
 
 Quoting from the [`QThread` doc](https://doc.qt.io/qtforpython-6/PySide6/QtCore/QThread.html#detailed-description):  
 > *"A `QThread` object manages one thread of control within the program. `QThreads` begin executing in `run()`. By default, `run()` starts the event loop by calling `exec()` and runs a Qt event loop inside the thread."*
@@ -548,9 +554,13 @@ For this particular app both approach has been used. But as we can see, for this
 1. No event loop is needed
 2. No signals/slots need to be handled inside the secondary thread (we are emitting signals though)
 
-In such case where you want to perform some expensive operation in another thread, where the thread does not need to receive any signals or events, subcalss `QThread`.
+In such case where you want to perform some expensive operation in another thread, where the thread does not need to receive any signals or events, subclass `QThread`.
 
-When to use worker-object approach?   
-1.*When you need an event loop in `QThread`*. Certain non GUI classes (such as `QTimer`, `QTcpSocket`, and `QProcess`) requires the presence of event loop. If you are using instances of these classes in your thread then you will have to use worker-object approach.  
+**When to use worker-object approach?**   
+
+1. *When you need an event loop in `QThread`*. Certain non GUI classes (such as `QTimer`, `QTcpSocket`, and `QProcess`) requires the presence of event loop. If you are using instances of these classes in your thread then you will have to use worker-object approach.  
 
 2. *If you have to handle signals/slots in the secondary thread*.
+
+I will close this blog by giving an example where only worker-object will work but not subclassing the `QThread`.  
+
