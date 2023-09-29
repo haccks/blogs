@@ -83,7 +83,7 @@ class MainWindow(QMainWindow):
 ```
 {: .nolineno }
 {: file="demo-subclass-cancel.py" }
-<!-- <sub>[Code on github]()</sub> -->
+<sub>[Code on github](https://gist.github.com/haccks/0fec103be10a963d49d050df86e87547#file-demo-subclass-cancel-py)</sub>
 
 Todo: Add a gif
 
@@ -152,7 +152,8 @@ class MainWindow(QMainWindow):
  
  ```
 {: .nolineno }
-{: file="demo-subclass-cancel.py" }  
+{: file="demo-worker-object-cancel.py" }  
+<sub>[Code on github](https://gist.github.com/haccks/0fec103be10a963d49d050df86e87547#file-demo-worker-object-cancel-py)</sub>
 
 Todo: Add a gif  
 
@@ -220,9 +221,8 @@ class MainWindow(QMainWindow):
 
 ```
 {: .nolineno }
-{: file="demo-worker-object-cancel.py" }
-
-<!-- <sub>[Code on github]()</sub> -->
+{: file="demo-worker-object-cancel-fix.py" }
+<sub>[Code on github](https://gist.github.com/haccks/0fec103be10a963d49d050df86e87547#file-demo-worker-object-cancel-fix-py)</sub>
 
 Todo: Add a gif
 
@@ -262,7 +262,7 @@ if __name__ == '__main__':
     app.exec()
 
 ```
-{: .file=qtimer-subclass.py}
+{: file="qtimer-subclass.py" }
 
 This will produce the output like 
 
@@ -311,7 +311,7 @@ if __name__ == '__main__':
     app.exec()
 
 ```
-{: .file=qtimer-worker-object.py}
+{: file="qtimer-worker-object.py" }
 And the output  
 
 ```
