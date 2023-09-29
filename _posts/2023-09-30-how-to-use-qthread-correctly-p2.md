@@ -7,7 +7,7 @@ tags: [python3, PySide6, Qt, QThread, PyQt6]     # TAG names should always be lo
 render_with_liquid: false
 ---
 
-<sub>This part is the continuation of the blog [How to use QThread correctly (part 2)?](). If you haven't read the first part then please read [part 1](https://www.haccks.com/posts/how-to-use-qthread-correctly-p1) before reading this.</sub>
+<sub>This part is the continuation of the blog [How to use QThread correctly (part 1)?](https://www.haccks.com/posts/how-to-use-qthread-correctly-p1/). If you haven't read the first part then please read [part 1](https://www.haccks.com/posts/how-to-use-qthread-correctly-p1/) before reading this.</sub>
 
 ## What is a QThread and How it works?
 
