@@ -1,7 +1,7 @@
 ---
 title: How to use QThread correctly (part 1)?
 description: "Whether one should subclass QThread or use worker object and move it to the thread depends on the use case"
-date: 2023-05-18 14:00:00 +0530
+date: 2023-09-30 00:30:00 +0530
 categories: [python]
 tags: [python3, PySide6, Qt, QThread, PyQt6]     # TAG names should always be lowercase
 render_with_liquid: false
@@ -332,7 +332,7 @@ While using *worker-object* approach you have to keep in mind:
 
 + Slots of `worker` instance is invoked in the new thread, but if this is called as normal member function from main thread then it will be invoked in the main thread.
 
-*[Continued...]()*
+*[Continued...](https://www.haccks.com/posts/how-to-use-qthread-correctly-p2/)*
 
 <!-- ### 3. Modifying examples to abort the download
 

@@ -1,17 +1,17 @@
 ---
 title: How to use QThread correctly (part 2)?
 description: "Whether one should subclass QThread or use worker object and move it to the thread depends on the use case"
-date: 2023-05-18 14:00:00 +0530
+date: 2023-09-30 00:30:00 +0530
 categories: [python]
 tags: [python3, PySide6, Qt, QThread, PyQt6]     # TAG names should always be lowercase
 render_with_liquid: false
 ---
 
-<sub>This part is the continuation of the blog [How to use QThread correctly (part 2)?](). If you haven't read the first part then please read [part 1]() before reading this.</sub>
+<sub>This part is the continuation of the blog [How to use QThread correctly (part 2)?](). If you haven't read the first part then please read [part 1](https://www.haccks.com/posts/how-to-use-qthread-correctly-p1/) before reading this.</sub>
 
 ## What is a QThread and How it works?
 
-### 3. Modifying examples to abort the download
+### 3. Modify examples to abort the download
 
 So far so good. Let's add one more functionality to our small app, a cancel button. This will give users an option to cancel the download in between.   
 
