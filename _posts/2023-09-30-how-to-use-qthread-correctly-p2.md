@@ -85,7 +85,7 @@ class MainWindow(QMainWindow):
 {: file="demo-subclass-cancel.py" }
 <sub>[Code on github](https://gist.github.com/haccks/0fec103be10a963d49d050df86e87547#file-demo-subclass-cancel-py)</sub>
 
-Todo: Add a gif
+![qthread-2](/assets/img/media/demo-sub-cancel.gif)
 
 
 While download is in progress and managed by worker thread, when we press `Cancel` button then it will emit it's `clicked()` signal in the main thread. And receiver of this signal is main thread itself, therefore the method `stop_download()` will execute in the main thread (`worker_thread` lives in the main thread and therefore main thread will handle received signal and execute `stop_download()` slot). Both of these jobs is done in parallel (not really!).   
@@ -155,7 +155,7 @@ class MainWindow(QMainWindow):
 {: file="demo-worker-object-cancel.py" }  
 <sub>[Code on github](https://gist.github.com/haccks/0fec103be10a963d49d050df86e87547#file-demo-worker-object-cancel-py)</sub>
 
-Todo: Add a gif  
+![qthread-2](/assets/img/media/demo-wo-cancel.gif) 
 
 As you can see, clicking `Cancel` is not doing what we expected it to do! *But, why?* 
 

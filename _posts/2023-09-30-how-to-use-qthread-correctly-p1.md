@@ -83,7 +83,9 @@ Let's breakdown the above paragraph first,
 
 3. *By default, `run()` starts the event loop by calling `exec()` and runs a Qt event loop inside the thread*: This event loop is optional. If re-implementation of `run()` doesn't call `exec()` then there will no event loop inside the thread.
 
-Let's create a simple toy app to demonstrate downloading a large file. This will have a simple progressbar and a push button. When user press the button download will start and at the same time progress bar will be updated showing the progress of the downloading file.
+Let's create a simple toy app to demonstrate downloading a large file. This will have a simple progressbar and a push button. When user press the button download will start and at the same time progress bar will be updated showing the progress of the downloading file.  
+
+![qthread-1](/assets/img/media/demo.gif)
 
 ### 1. Subclass `QThread` (Without event loop)  
 
@@ -165,10 +167,6 @@ if __name__ == '__main__':
 ```
 {: file="demo-subclass.py" }
 
-This will have following output: 
-
-Todo: Add gif
-![qthread-1](/assets/img/media/qthread-1.png){: width="400" height="50}
 
 Let's walkthrough the above code. We defined `WorkerThread` class, a subclass of `QThread`
 
