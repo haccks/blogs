@@ -277,7 +277,7 @@ plugins=(
 + Right click on `MaterialDesignColors.terminal`{: .filepath} and open it with Terminal app
 + Type <kbd>⌘ command</kbd>+<kbd>,</kbd> and go to `Profiles`{: .filepath}. You will see `MaterialDesignColors` profile on the left pan. Select it and click *Default* button at the bottom.
 + Change font to "MesloLGS Nerd Font".
-+ Relaunch your Terminal.
++ Relaunch the Terminal app.
 
 ### 13. Advanced iTerm2 settings
 
