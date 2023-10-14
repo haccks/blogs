@@ -180,7 +180,7 @@ footer {
   height: $footer-height;
   border-top: 1px solid var(--main-border-color);
 
-  @extend %text-color;
+  @extend %text-color !optional;
 
   a {
     @extend %text-highlight;

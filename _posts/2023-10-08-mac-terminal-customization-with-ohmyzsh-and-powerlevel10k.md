@@ -44,8 +44,8 @@ We are done with terminal here , so close it for now.
 
 ### 4. Install iTerm2
 
-![iTerm2](/assets/img/media/p10k/iterm2-logo.jpeg) 
-[iTerm2](https://iterm2.com/) is a replacement for Mac Terminal. It has lot of [features](https://iterm2.com/features.html) and supports lot of plugins which makes it fun and easy to use. 
+<!-- ![iTerm2](/assets/img/media/p10k/iterm2-logo.jpeg)  -->
+iTerm2 is a replacement for Mac Terminal. It has lot of [features](https://iterm2.com/features.html) and supports lot of plugins which makes it fun and easy to use. Download iTerm2 from its [official website](https://iterm2.com/) and install it.
 
 ### 5. Install [oh-my-zsh](https://ohmyz.sh/)
 
