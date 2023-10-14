@@ -237,7 +237,14 @@ typeset -g POWERLEVEL9K_DIR_BACKGROUND=4
 typeset -g POWERLEVEL9K_DIR_FOREGROUND=0
 ```
 {: .nolineno}  
-  
+
+To see the effect run  
+
+```bash
+source ~/.p10k.sh
+```
+{: .nolineno} 
+
 ### 11. Install plugins for zsh 
 
 + Syntax Highlighting Plugin:  
