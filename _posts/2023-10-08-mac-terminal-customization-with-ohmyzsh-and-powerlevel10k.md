@@ -66,7 +66,7 @@ sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/ins
 
 Open/relaunch iTerm2. Run `ls -l` and it should look like   
 
-![term-omz](/assets/img/media/p10k/iterm-omz.png){: width="720" height="600" }
+![term-omz](/assets/img/media/p10k/iterm-omz.avif){: width="720" height="600" }
 
 ### 6. Install [powerlevel10k](https://github.com/romkatv/powerlevel10k)  
 
@@ -103,7 +103,7 @@ You can use any nerd font but for me *Meslo* works best with powerlevel10k (and 
 + set *Font* to "MesloLGS Nerd Font"  
 + set font size to `14`
 
-![term-font](/assets/img/media/p10k/iterm-font.png){: width="720" height="600" }
+![term-font](/assets/img/media/p10k/iterm-font.avif){: width="720" height="600" }
 
 ### 8. Configure powerlevel10k
 Run   
