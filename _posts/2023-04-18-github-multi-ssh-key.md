@@ -92,7 +92,7 @@ Check the added keys with `ssh-add -l` if they are added.
 > Do not skip this step!
 {: .prompt-warning }
 
-Add public keys to your account on GitHub. Github already has good documentation for it. For more information, see [Adding a new SSH key to your GitHub account](https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account).
+Add public keys to your account on GitHub. Github already has good documentation for it. For more information, see [Adding a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account?platform=mac).
 
 ## 5. Test the connection  
 Test the connection for both accounts  
