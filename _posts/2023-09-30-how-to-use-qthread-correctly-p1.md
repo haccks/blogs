@@ -2,7 +2,7 @@
 title: How to use QThread correctly (part 1)?
 description: "Whether one should subclass QThread or use worker object and move it to the thread depends on the use case"
 date: 2023-09-30 00:30:00 +0530
-categories: [python]
+categories: [python, programming]
 tags: [python3, PySide6, Qt, QThread, PyQt6]     # TAG names should always be lowercase
 render_with_liquid: false
 ---

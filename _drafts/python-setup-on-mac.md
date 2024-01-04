@@ -2,15 +2,196 @@
 title: How to setup python coding environment on Mac OS?
 description: ""
 date: 2023-05-18 14:00:00 +0530
-categories: [python]
-tags: [python3, mac]     # TAG names should always be lowercase
+categories: [mac, python, programming]
+tags: [python3, vscode, git, github]     # TAG names should always be lowercase
 render_with_liquid: false
 ---
 
-![vpn-light](/assets/terminal_cap.avif){: width="720" height="600" }
+## A step by step beginner guide to setting up your mac for python programming 
 
-<!-- <video autoplay loop muted playsinline width="720" height="600">
-  <source src="my-animation.webm" type="video/webm">
-  <source src="/assets/term.mp4/" type="video/mp4">
-</video> -->
+1. Install Apple’s Developer Tools
+2. Install a package manager
+3. Install python
+4. Install VS Code and its necessary extensions
+5. Write your first python project
+6. Install git
+7. Create a github account and configure it
+8. Push your project to github
 
+### 1. Install Apple's Developer Tools
+
+Open spotlight by typing <kbd>⌘ command</kbd>+<kbd>space</kbd> and then type "terminal" in the spotlight and launch the terminal. Run the command below and install Apple's Command Line Developer Tools: 
+
+```bash
+xcode-select --install
+```
+{: .nolineno}
+
+Launch your terminal and type `python3 --version` (for older MacOS version < 12.3 run `python --version`) and it will show the system python version (Python 3.9.6 on Sonoma 14.2.1).
+
+If you run `which python3` (or `which python` for older versions) in the terminal then it will return `/usr/bin/python3`. This is the python that comes with your operating system by default. This python is used by apple system. This is **system python and let's forget about this python and and promise yourself to never touch it**. 
+
+### 2. Install a package manager for Mac 
+
+You can either install [MacPorts](https://www.macports.org/) or [Homebrew](https://brew.sh/). I prefer MacPorts over homebrew.
+Download a MacPorts package from its [official website](https://www.macports.org/install.php) for your operating system.
+
+After installation is complete fire up your terminal again and run `port version`. If it is installed successfully it will print the version installed (`Version: 2.8.1`).   
+
+### 3. Install python
+
+There are many ways to install python on your Mac, but in this tutorial I will use MacPort package manager to install a new version of python.   
+
+>Do not use [python.org](https://www.python.org/downloads/macos/) to install python! 
+{: .prompt-warning}
+
+You must be asking by now *why not use system python instead of using a package manager to install a new one?*
+The reason is simple. You may want to use different python version and update it in the future or use multiple python versions for your application development. You don't want to mess with system python. The MacPort package manager will help to manage python (install, update, use multiple versions etc.) and other packages.
+
+Let's use MacPort. To check the available versions of python, run 
+
+```bash
+port search --name --line --regex '^python\d*$'
+```
+{: .nolineno}
+
+It will return the output similar to this  
+
+```
+python26	2.6.9	lang	An interpreted, object-oriented programming language
+python27	2.7.18	lang	An interpreted, object-oriented programming language
+python32	3.2.6	lang	An interpreted, object-oriented programming language
+python33	3.3.7	lang	An interpreted, object-oriented programming language
+python34	3.4.10	lang	An interpreted, object-oriented programming language
+python35	3.5.10	lang	An interpreted, object-oriented programming language
+python36	3.6.15	lang	An interpreted, object-oriented programming language
+python37	3.7.17	lang	An interpreted, object-oriented programming language
+python38	3.8.18	lang	An interpreted, object-oriented programming language
+python39	3.9.18	lang	An interpreted, object-oriented programming language
+python310	3.10.13	lang	An interpreted, object-oriented programming language
+python311	3.11.7	lang	An interpreted, object-oriented programming language
+python312	3.12.1	lang	An interpreted, object-oriented programming language
+```
+
+Choose the version you want to install. You can install multiple versions if you need. For this tutorial I will choose 3.11.7. Run below command to install python 3.11
+
+```bash
+sudo port install python311
+```
+{: .nolineno}
+
+It will ask for your password and then permission to install all the other dependencies for python. 
+
+```
+--->  Computing dependencies for python311
+The following dependencies will be installed: 
+ bzip2
+ expat
+ gettext
+ gettext-runtime
+ gettext-tools-libs
+ gperf
+ libedit
+ libffi
+ libiconv
+ libtextstyle
+ openssl
+ openssl3
+ pkgconfig
+ python3_select
+ python3_select-311
+ python_select
+ python_select-311
+ sqlite3
+ xz
+ zlib
+Continue? [Y/n]: y
+```
+Type `y` and wait for it to install (it will take a while). Once its installed, let's make this version the default python. Run  
+
+```bash
+ sudo port select --set python3 python311
+```
+{: .nolineno}
+
+Run `which python3` in the terminal and you will see that the default python is now `/opt/local/bin/python3`.
+
+>If you have installed multiple versions of python using `port`, e.g. python310, python311 and python312, then each of these will be active and you can switch between them by using the command `python` with their version suffix, e.g. `python3.10`, `python3.11` and `python3.12` respectively, in the terminal. You can make any these versions as the default python by running the `sudo port select --set python3 python<version>` command.
+{: .prompt-info}
+
+In the terminal type `python3` (or `python3.11`) and hit <kbd>return</kbd>. You should see python REPL (Read, Evaluate, Print, Loop)
+
+```
+Python 3.11.7 (main, Jan  5 2024, 00:17:30) [Clang 15.0.0 (clang-1500.1.0.2.5)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+```
+Type `exit()` or `quit()` to get out of REPL.
+
+#### Install `pip`
+
+`pip` is a package manager for python. Let's install it too via `port`  
+
+```bash
+sudo port install py311-pip
+```
+{: .nolineno}
+
+Note that, for each version of python you have installed via `port`, you need to install it's corresponding pip package.
+
+You can use the command `pip-3.11 install <package name>` to install a python package.
+
+To make it the default `pip3`, run
+
+```bash
+ `sudo port select --set pip3 pip311`
+```
+{: .nolineno}
+
+Now you can use `pip3 install <package name>` to install a python package
+
+#### Install python virtual environment wrapper  
+
+It is a best practice to use virtual environments when working on python projects. This gives you the flexibility to use different versions of same package/library for different python projects/applications. (Read more on [official doc](https://docs.python.org/3/tutorial/venv.html)).  
+
+`venv` is installed by default when installing python. To check, run   
+```bash
+python3 -m venv -h
+``` 
+{: .nolineno} 
+
+
+`virtualenvwrapper` is a tool to manage python virtual environments. We will install `virtualenvwrapper` using `pip3` 
+
+```bash
+pip3 install virtualenvwrapper
+```
+{: .nolineno}
+
+Open `~/.bash_profile` file  
+
+```bash
+nano ~/.bash_profile
+```
+{: .nolineno}
+
+paste these line at the end of the file
+
+```bash
+########## Virtual wrapper Setup ############
+
+export VIRTUALENVWRAPPER_PYTHON=/opt/local/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_VIRTUALENV=~/Library/Python/3.11/bin/virtualenv
+source ~/Library/Python/3.11/bin/virtualenvwrapper.sh
+
+######## End Virtual wrapper Setup ##########
+```
+{: .nolineno}
+
+Press keys <kbd>⌃ control</kbd> + <kbd>X</kbd> and then press `y` to save. Relaunch the terminal and then run `mkvirtualenv myvenv` to create a virtual environment `myvenv`. To start working with this virtual environment run the command `workon myvenv`. If everything is installed properly then this virtual environment will be activated. To deactivate it, run `deactivate`. Read more about `virtualenvwrapper` on [official doc](https://virtualenvwrapper.readthedocs.io/en/latest/index.html).
+
+
+### 4. Install VS Code
+
+Install Visual Studio Code source code editor from its [official site](https://code.visualstudio.com/). 
