@@ -178,20 +178,64 @@ nano ~/.bash_profile
 paste these line at the end of the file
 
 ```bash
-########## Virtual wrapper Setup ############
+########## Start 'virtualenvwrapper' Setup ############
 
 export VIRTUALENVWRAPPER_PYTHON=/opt/local/bin/python3
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_VIRTUALENV=~/Library/Python/3.11/bin/virtualenv
 source ~/Library/Python/3.11/bin/virtualenvwrapper.sh
 
-######## End Virtual wrapper Setup ##########
+########## End 'virtualenvwrapper' Setup   ############
 ```
 {: .nolineno}
 
-Press keys <kbd>⌃ control</kbd> + <kbd>X</kbd> and then press `y` to save. Relaunch the terminal and then run `mkvirtualenv myvenv` to create a virtual environment `myvenv`. To start working with this virtual environment run the command `workon myvenv`. If everything is installed properly then this virtual environment will be activated. To deactivate it, run `deactivate`. Read more about `virtualenvwrapper` on [official doc](https://virtualenvwrapper.readthedocs.io/en/latest/index.html).
+Press keys <kbd>⌃ control</kbd> + <kbd>X</kbd> and then press `y` to save. Relaunch the terminal and then run `mkvirtualenv myvenv` to create a virtual environment `myvenv`. To start working with this virtual environment run the command `workon myvenv`. If everything is installed properly then this virtual environment will be activated. To deactivate it, run `deactivate`. Read more about `virtualenvwrapper` and how to use it on [official doc](https://virtualenvwrapper.readthedocs.io/en/latest/index.html).
 
 
-### 4. Install VS Code
+### 4. Install Visual STudio Code
 
-Install Visual Studio Code source code editor from its [official site](https://code.visualstudio.com/). 
+Download Visual Studio Code source code editor from its [official site](https://code.visualstudio.com/). Extract the executable and move it to the application folder.    
+Create a folder named `hello`{: .filepath} and navigate to it and launch VSC (By starting VS Code in a folder, that folder becomes your "workspace". Read more on [official doc](https://code.visualstudio.com/docs/python/python-tutorial#_start-vs-code-in-a-workspace-folder)) 
+
+```bash
+mkdir hello
+cd hello
+code .
+```
+
+![vsc1](/assets/img/media/py-install/vsc-welcome.png){: width="720" height="600" }
+
+VS Code comes with hundreds of free extensions. For this tutorial we will install only two extensions, *Python* and *Pylance*. Click on extension button on the activity bar and install *Python* and *Pylance* extensions.
+
+![vsc2](/assets/img/media/py-install/vsc-ext.avif){: width="720" height="600" }
+
+You can create new virtual environments in VSC using Command Palette, but we have already created one in step #3 and therefore we will use that one. Type <kbd>⌘ command</kbd>+<kbd>shift</kbd>+<kbd>P</kbd> to open Command Palette. Type `Python: Select Interpreter` and select it. Then choose the python interpreter from `myvenv` (*Python 3.11.7 ('myvenv')*).
+
+![vsc2](/assets/img/media/py-install/vsc-interpreter.png){: width="720" height="600" }
+
+Now create a [new code file](https://code.visualstudio.com/docs/python/python-tutorial#_create-a-python-source-code-file) `hello.py` in `hello`{: .filepath} directory and write a line `print("Hello, World!)` in it. Click the [play button](https://code.visualstudio.com/docs/python/python-tutorial#_run-python-code) in the top-right side of the editor to run the python code.
+
+Congratulations! You have just created your first python project. 
+
+ ### 5. Install Git
+
+In step #1 we installed *Apple’s Developer Tools*. It installs a set of tools for development and along with other tools it also install git. In the terminal, run 
+
+```bash
+git --version
+```
+{: .nolineno}
+and it will return something like  
+
+```
+git version 2.39.3 (Apple Git-145)
+```
+
+This git version is bit older and at the time of writing this blog, the latest version is 2.43.0.
+
+Let's install the latest version using `port`  
+
+```bash
+sudo port install git
+```
+{: .nolineno}
