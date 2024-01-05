@@ -217,7 +217,14 @@ Now create a [new code file](https://code.visualstudio.com/docs/python/python-tu
 
 Congratulations! You have just created your first python project. 
 
- ### 5. Install Git
+> Visual Studio Code comes with integrated source control and includes git support. Alternatively you can download GitHub Desktop (https://desktop.github.com/) that also comes with integrated git. If you are using any one of these then skip step #5
+{: .prompt-info}  
+
+
+### 5. Install Git
+
+> Follow this step only if you want to use git command line.
+{: .prompt-warning} 
 
 In step #1 we installed *Apple’s Developer Tools*. It installs a set of tools for development and along with other tools it also install git. In the terminal, run 
 
@@ -231,11 +238,34 @@ and it will return something like
 git version 2.39.3 (Apple Git-145)
 ```
 
-This git version is bit older and at the time of writing this blog, the latest version is 2.43.0.
-
-Let's install the latest version using `port`  
+We will use this git. This git version is bit older and if you want to use the latest version then you can install the latest version using `port`  
 
 ```bash
 sudo port install git
 ```
 {: .nolineno}
+
+Setup your git [username](https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git) and commit [email address](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address).
+
+```bash
+git config --global user.name "username"
+git config --global user.email "useremail@host.com"
+```
+
+Replace `username` and `useremail@host.com` with your's.
+
+Now it's time to learn version control using [git](https://rogerdudler.github.io/git-guide/)
+
+### 6. Setting up GitHub account
+
+Create a [GitHub account](https://github.com/) to host your code on cloud and share it other developers.  
+
+After that you need to connect your git to GitHub. You can either connect over HTTPS os SSH. For beginner I would recommend SSH. Follow the following docs:  
+
+1. [Generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) and adding to he ssh-agent
+
+2. [Add the generated key to your github account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+
+3. [Add your local repo hosted code to GitHub](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git)
+
+To use multiple github accounts on Mac follow this [tutorial](https://www.haccks.com/posts/github-multi-ssh-key/)
