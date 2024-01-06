@@ -1,7 +1,7 @@
 ---
 title: How to setup python coding environment on Mac OS?
-description: ""
-date: 2023-05-18 14:00:00 +0530
+description: "A step by step beginner guide to setting up your mac for python programming"
+date: 2024-01-07 1:20:00 +0530
 categories: [mac, python, programming]
 tags: [python3, vscode, git, github]     # TAG names should always be lowercase
 render_with_liquid: false
