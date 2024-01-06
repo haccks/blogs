@@ -66,7 +66,7 @@ python311	3.11.7	lang	An interpreted, object-oriented programming language
 python312	3.12.1	lang	An interpreted, object-oriented programming language
 ```
 
-Choose the version you want to install. For this tutorial I will choose 3.11.7. Run below command to install python 3.11
+Choose the version you want to install. For this tutorial I will choose the 3.11 version. Run below command to install python 3.11
 
 ```bash
 sudo port install python311
@@ -100,14 +100,14 @@ The following dependencies will be installed:
  zlib
 Continue? [Y/n]: y
 ```
-Type `y` and wait for it to install (it will take a while). Once its installed, run
+Type `y` and wait for it to install (it will take a while). Once its installed, in the terminal run
 
 ```bash
 python3.11 --version 
 ```
-in the terminal and you will see the version installed by python (*Python 3.11.7*).  
+and you will see the version installed by python (*Python 3.11.7*).  
 
-Let's make this new version the *default python*. Run  
+Let's make this new version the *default python* by executing
 
 ```bash
  sudo port select --set python3 python311
@@ -166,7 +166,7 @@ python3 -m venv -h
 ``` 
 {: .nolineno} 
 
-`virtualenvwrapper` is a tool to manage python virtual environments. We will install `virtualenvwrapper` using `pip3` 
+To manage virtual environment we will install another python package called `virtualenvwrapper`. We will install `virtualenvwrapper` using `pip3` 
 
 ```bash
 pip3 install virtualenvwrapper
@@ -180,7 +180,7 @@ nano ~/.bash_profile
 ```
 {: .nolineno}
 
-paste these line at the end of the file
+and paste these lines at the end of the file
 
 ```bash
 ########## Start 'virtualenvwrapper' Setup ############
