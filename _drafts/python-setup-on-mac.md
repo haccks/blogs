@@ -9,15 +9,6 @@ render_with_liquid: false
 
 ## A step by step beginner guide to setting up your mac for python programming 
 
-1. Install Apple’s Developer Tools
-2. Install a package manager
-3. Install python
-4. Install VS Code and its necessary extensions
-5. Write your first python project
-6. Install git
-7. Create a github account and configure it
-8. Push your project to github
-
 ### 1. Install Apple's Developer Tools
 
 Open spotlight by typing <kbd>⌘ command</kbd>+<kbd>space</kbd> and then type "terminal" in the spotlight and launch the terminal. Run the command below and install Apple's Command Line Developer Tools: 
@@ -29,16 +20,18 @@ xcode-select --install
 
 Launch your terminal and type `python3 --version` (for older MacOS version < 12.3 run `python --version`) and it will show the system python version (Python 3.9.6 on Sonoma 14.2.1).
 
-If you run `which python3` (or `which python` for older versions) in the terminal then it will return `/usr/bin/python3`. This is the python that comes with your operating system by default. This python is used by apple system. This is **system python and let's forget about this python and and promise yourself to never touch it**. 
+If you run `which python3` (or `which python` for older versions) in the terminal then it will return `/usr/bin/python3`. This is the default python installed for macos. This python is used by apple system. This is **the system python and let's forget about this python and and promise yourself to never look it back again**. 
 
 ### 2. Install a package manager for Mac 
 
-You can either install [MacPorts](https://www.macports.org/) or [Homebrew](https://brew.sh/). I prefer MacPorts over homebrew.
+You can either install [MacPorts](https://www.macports.org/) or [Homebrew](https://brew.sh/). I prefer MacPorts over homebrew and will use it for this tutorial.
 Download a MacPorts package from its [official website](https://www.macports.org/install.php) for your operating system.
 
 After installation is complete fire up your terminal again and run `port version`. If it is installed successfully it will print the version installed (`Version: 2.8.1`).   
 
-### 3. Install python
+### 3. Install and setup python
+
+#### 3.1 Install python
 
 There are many ways to install python on your Mac, but in this tutorial I will use MacPort package manager to install a new version of python.   
 
@@ -73,14 +66,14 @@ python311	3.11.7	lang	An interpreted, object-oriented programming language
 python312	3.12.1	lang	An interpreted, object-oriented programming language
 ```
 
-Choose the version you want to install. You can install multiple versions if you need. For this tutorial I will choose 3.11.7. Run below command to install python 3.11
+Choose the version you want to install. For this tutorial I will choose 3.11.7. Run below command to install python 3.11
 
 ```bash
 sudo port install python311
 ```
 {: .nolineno}
 
-It will ask for your password and then permission to install all the other dependencies for python. 
+It will ask for your password and then the permission to install all other dependencies for python. 
 
 ```
 --->  Computing dependencies for python311
@@ -107,7 +100,14 @@ The following dependencies will be installed:
  zlib
 Continue? [Y/n]: y
 ```
-Type `y` and wait for it to install (it will take a while). Once its installed, let's make this version the default python. Run  
+Type `y` and wait for it to install (it will take a while). Once its installed, run
+
+```bash
+python3.11 --version 
+```
+in the terminal and you will see the version installed by python (*Python 3.11.7*).  
+
+Let's make this new version the *default python*. Run  
 
 ```bash
  sudo port select --set python3 python311
@@ -115,9 +115,6 @@ Type `y` and wait for it to install (it will take a while). Once its installed, 
 {: .nolineno}
 
 Run `which python3` in the terminal and you will see that the default python is now `/opt/local/bin/python3`.
-
->If you have installed multiple versions of python using `port`, e.g. python310, python311 and python312, then each of these will be active and you can switch between them by using the command `python` with their version suffix, e.g. `python3.10`, `python3.11` and `python3.12` respectively, in the terminal. You can make any these versions as the default python by running the `sudo port select --set python3 python<version>` command.
-{: .prompt-info}
 
 In the terminal type `python3` (or `python3.11`) and hit <kbd>return</kbd>. You should see python REPL (Read, Evaluate, Print, Loop)
 
@@ -128,38 +125,46 @@ Type "help", "copyright", "credits" or "license" for more information.
 ```
 Type `exit()` or `quit()` to get out of REPL.
 
-#### Install `pip`
+#### 3.2 Install `pip`
 
-`pip` is a package manager for python. Let's install it too via `port`  
+`pip` is a package manager for python. Let's install it 
 
 ```bash
 sudo port install py311-pip
 ```
 {: .nolineno}
 
-Note that, for each version of python you have installed via `port`, you need to install it's corresponding pip package.
-
-You can use the command `pip-3.11 install <package name>` to install a python package.
-
-To make it the default `pip3`, run
+To install a python package, for e.g. *Django*, you can run
 
 ```bash
- `sudo port select --set pip3 pip311`
+pip-3.11 install django
 ```
 {: .nolineno}
 
-Now you can use `pip3 install <package name>` to install a python package
+To make `pip-3.11` the default `pip3`, run
 
-#### Install python virtual environment wrapper  
+```bash
+sudo port select --set pip3 pip311
+```
+{: .nolineno}
+
+Now you can use just `pip3` instead of `pip-3.11`
+
+```bash
+pip3 install django
+```
+{: .nolineno}
+
+
+#### 3.3 Install python virtual environment wrapper  
 
 It is a best practice to use virtual environments when working on python projects. This gives you the flexibility to use different versions of same package/library for different python projects/applications. (Read more on [official doc](https://docs.python.org/3/tutorial/venv.html)).  
 
-`venv` is installed by default when installing python. To check, run   
+`venv` is installed by default with python. To confirm, run   
 ```bash
 python3 -m venv -h
 ``` 
 {: .nolineno} 
-
 
 `virtualenvwrapper` is a tool to manage python virtual environments. We will install `virtualenvwrapper` using `pip3` 
 
@@ -190,7 +195,6 @@ source ~/Library/Python/3.11/bin/virtualenvwrapper.sh
 {: .nolineno}
 
 Press keys <kbd>⌃ control</kbd> + <kbd>X</kbd> and then press `y` to save. Relaunch the terminal and then run `mkvirtualenv myvenv` to create a virtual environment `myvenv`. To start working with this virtual environment run the command `workon myvenv`. If everything is installed properly then this virtual environment will be activated. To deactivate it, run `deactivate`. Read more about `virtualenvwrapper` and how to use it on [official doc](https://virtualenvwrapper.readthedocs.io/en/latest/index.html).
-
 
 ### 4. Install Visual STudio Code
 
@@ -238,7 +242,7 @@ and it will return something like
 git version 2.39.3 (Apple Git-145)
 ```
 
-We will use this git. This git version is bit older and if you want to use the latest version then you can install the latest version using `port`  
+We will use this git. If you want to use the latest version then you can install it using `port`  
 
 ```bash
 sudo port install git
@@ -256,7 +260,7 @@ Replace `username` and `useremail@host.com` with your's.
 
 Now it's time to learn version control using [git](https://rogerdudler.github.io/git-guide/)
 
-### 6. Setting up GitHub account
+### 6. Setting up a GitHub account
 
 Create a [GitHub account](https://github.com/) to host your code on cloud and share it other developers.  
 
