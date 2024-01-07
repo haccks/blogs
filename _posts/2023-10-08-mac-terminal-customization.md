@@ -1,6 +1,6 @@
 ---
 title: Mac Terminal Customization with Oh-My-ZSH and powerlevel10k
-description: ""
+description: "A step by step guide to customize your terminal on Mac with Oh-My-ZSH and powerlevel10k."
 date: 2023-10-08 6:00:00 +0530
 categories: [mac]
 tags: [terminal, iTerm2, powerlevel10k, zsh, oh-my-zsh]     # TAG names should always be lowercase
