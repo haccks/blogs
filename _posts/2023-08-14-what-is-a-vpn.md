@@ -1,5 +1,5 @@
 ---
-title: What is a VPN? How does a VPN work?
+title: What is a VPN? How does a VPN work? A tutorial for absolute beginners.
 description: A virtual private network (VPN) is a method to create a secure connection over an insecure network like public internet.
 date: 2023-08-14 5:00:00 +0530
 categories: [networking]

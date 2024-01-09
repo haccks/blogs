@@ -1,5 +1,5 @@
 ---
-title: How to setup python coding environment on Mac OS?
+title: A beginner guide to setup python coding environment on Mac OS
 description: "A step by step beginner guide to setting up your mac for python programming"
 date: 2024-01-07 1:20:00 +0530
 categories: [mac, python, programming]
