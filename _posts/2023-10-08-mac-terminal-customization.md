@@ -5,9 +5,12 @@ date: 2023-10-08 6:00:00 +0530
 categories: [mac]
 tags: [terminal, iTerm2, powerlevel10k, zsh, oh-my-zsh]     # TAG names should always be lowercase
 render_with_liquid: false
+image:
+  path: /assets/img/media/p10k/iterm-omz-p10k.avif
+  alt: Customized iTerm2 with Oh-My-ZSH and powerlevel10k
 ---
 
-![banner](/assets/img/media/p10k/iterm-omz-p10k.avif){: width="720" height="600" }
+<!-- ![banner](/assets/img/media/p10k/iterm-omz-p10k.avif){: width="720" height="600" } -->
 
 <!-- ### System information
 

@@ -4,7 +4,7 @@ description: "A beginner tutorial on how to install MacPorts on Mac and its usag
 date: 2023-08-14 5:00:00 +0530
 categories: [mac]
 tags: [macports]  # TAG names should always be lowercase
-# render_with_liquid: false
+render_with_liquid: false
 # pin: true
 ---
 
@@ -16,13 +16,13 @@ There are two popular package manager for Mac, [Macports](https://www.macports.o
 
 MacPorts is a package manager for Mac operating system. It is an easy to use system for *compiling*, *installing*, and *managing* open source software.  
 
-> A package is a collection of files that are bundled together and can be installed and removed as a group.
+> A *package* is a collection of files that are bundled together and can be installed and removed as a group.
 {: .prompt-tip }
 <!-- A package manager lets you load packages into memory. A package is a set of routines and data types that is stored as a resource of type 'PACK'. -->
 
 Conceptually Macports is divided into two parts:
-+ MacPorts Base: The software that we will install (the package manager)
-+ Set of available *ports*: A port is a set of specifications contained in a [Portfile](https://guide.macports.org/#development.introduction) that defines an application, its characteristics, and any files or special instructions required to install it.   
++ *MacPorts Base*: The software that we will install (the package manager)
++ Set of available *ports*: A *port* is a set of specifications contained in a [Portfile](https://guide.macports.org/#development.introduction) that defines an application, its characteristics, and any files or special instructions required to install it.   
 This allows you to use a single command to tell MacPorts to automatically download, compile, and install applications and libraries
 (Ref: [doc](https://guide.macports.org/#using))
 
@@ -41,7 +41,7 @@ xcode-select --install
 
 ### 3. Installing MacPorts on Mac
 
-There are two ways to install MacPorts:
+You can install MacPorts using any of the following:
 + Install a binary package (recommended)
 + Install it from source
 + Git install
@@ -64,12 +64,11 @@ echo $PATH
 ```
 {: .nolineno}  
 
-You should see   
+You should see below line at the beginning of the path 
 
 ```
 /opt/local/bin:/opt/local/sbin:$PATH
 ```
-at the beginning of the path.
 
 ### 4. Using MacPorts
 
@@ -123,26 +122,44 @@ which python3.11
 
 It will return `/opt/local/bin/python3.11`.
 
+To make it default python (you can use just `python` instead of `python3.11`), run
+
+```bash
+ sudo port select --set python3 python311
+```
+{: .nolineno}
+
 > You can also install multiple ports together. For example, below command will install php 8.1, MySQL 8.1 and apache 2
 {: .prompt-tip }
 ```bash
 sudo port instal php81 mysql81 apache2
 ```
 
-
 ### 5. Common MacPorts Commands
-+ port help 
-+ sudo port selfupdate
-+ port list
-+ port installed
-+ port outdated
-+ sudo port upgrade
-+ port info
-+ port deps
-+ port notes
-+ sudo port clean
-+ sudo port uninstall
+
+<!-- | Commands | Info |  
+| -------- | ---- |  
+| `man port` | Man page for `port` utility. |
+| `port help` | Get a brief info about an action. e.g. `port help install` will return some info about `install` action. |
+| `sudo port selfupdate` | Update local (installed) ports. |
+| `port list` | Lists the most recent version available in MacPorts or display a list of all available ports if no ports are specified. For e.g. `port list python39` will list the current available version of `python39` | -->
+
++ `man port`: Man page for `port` utility.
++ `port help`: Get a brief info about an action. e.g. `port help install` will return some info about `install` action.
++ `port install`: Install a port. e.g. `port install python39`
++ `sudo port selfupdate`: Update local (installed) ports.
++ `port list`: Lists the most recent version available in MacPorts or display a list of all available ports if no ports are specified. For e.g. `port list python39` will list the current available version of `python39`.
++ `port installed`: List all installed ports.
++ `port outdated`: List outdated local ports.
++ `sudo port upgrade`: Upgrade local outdated ports.
++ `port info`: Get info about a port. e.g. `port info python39`.
++ `port deps`: List dependencies of a port. e.g. `port deps python39`.
++ `sudo port clean`: Clean indeterminate files of failed installation.
++ `sudo port uninstall`: Uninstall a port. e.g. `sudo port uninstall python39`.
 
 
 ### 6. Troubleshoot
 
++ If you try to install a port and for some reason installation fails then you should run `sudo port clean portname` before reinstalling it.
+
++ If you are upgrading your MacOs (major version upgrade), then you need to migrate all ports to the new MacOs version. Follow all the steps mentioned on official site: [Migrating MacPorts after a major operating system upgrade or from one computer to another](https://trac.macports.org/wiki/Migration).
