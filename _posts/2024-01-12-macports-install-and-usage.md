@@ -113,10 +113,10 @@ python3.11 --version
 
 and you will get `Python 3.11.7`.
 
-MacPorts install it's binary in `/opt/local/bin`. Upon running command  
+MacPorts install it's binary in `/opt/local/bin`. To verify if you are using the python installed by MacPorts, run
 
 ```bash
-which python3.11
+which python3.11  # Verify if you are using the port installed by MacPorts
 ```
 {: .nolineno}
 
@@ -132,7 +132,7 @@ To make it default python (you can use just `python3` instead of `python3.11`), 
 > You can also install multiple ports together. For example, below command will install php 8.1, MySQL 8.1 and apache 2
 {: .prompt-tip }
 ```bash
-sudo port instal php81 mysql81 apache2
+sudo port install php81 mysql81 apache2
 ```
 
 ### 5. Common MacPorts Commands
@@ -162,4 +162,4 @@ sudo port instal php81 mysql81 apache2
 
 + If you try to install a port and for some reason installation fails then you should run `sudo port clean portname` before reinstalling it.
 
-+ If you are upgrading your MacOs (major version upgrade), then you need to migrate all ports to the new MacOs version. Follow all the steps mentioned on official site: [Migrating MacPorts after a major operating system upgrade or from one computer to another](https://trac.macports.org/wiki/Migration).
++ If you are upgrading your macOs (major version upgrade), then you need to migrate all ports to the new macOs version. Follow all the steps mentioned on official site: [Migrating MacPorts after a major operating system upgrade or from one computer to another](https://trac.macports.org/wiki/Migration).

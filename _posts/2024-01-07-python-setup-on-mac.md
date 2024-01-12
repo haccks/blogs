@@ -9,29 +9,36 @@ render_with_liquid: false
 
 ## A step by step beginner guide to setting up your mac for python programming 
 
-### 1. Install Apple's Developer Tools
+### 1.Prerequisite
 
-Open spotlight by typing <kbd>⌘ command</kbd>+<kbd>space</kbd> and then type "terminal" in the spotlight and launch the terminal. Run the command below and install Apple's Command Line Developer Tools: 
+Make sure following tools are installed
+
++ Apple's Developer Tools
++ MacPorts Package Manager
+
+If you don't know what are these then don't worry. Follow [this beginner tutorial to  install Apple's Developer Tools and MacPorts](https://www.haccks.com/posts/macports-install-and-usage/).
+
+<!-- Open spotlight by typing <kbd>⌘ command</kbd>+<kbd>space</kbd> and then type "terminal" in the spotlight and launch the terminal. Run the command below and install Apple's Command Line Developer Tools: 
 
 ```bash
 xcode-select --install
 ```
-{: .nolineno}
+{: .nolineno} -->
 
-Launch your terminal and type `python3 --version` (for older MacOS version < 12.3 run `python --version`) and it will show the system python version (Python 3.9.6 on Sonoma 14.2.1).
+Once installed, launch your terminal and type `python3 --version` (for older MacOS version < 12.3 run `python --version`) and it will show the system python version (Python 3.9.6 on Sonoma 14.2.1).
 
-If you run `which python3` (or `which python` for older versions) in the terminal then it will return `/usr/bin/python3`. This is the default python installed for macos. This python is used by apple system. This is **the system python and let's forget about this python and and promise yourself to never look it back again**. 
+If you run `which python3` (or `which python` for older versions) in the terminal then it will return `/usr/bin/python3`. This is the default python installed for macos. This python is used by apple system. This is **the system python and let's forget about this python and and promise yourself to never look back at it again**. 
 
-### 2. Install a package manager for Mac 
+<!-- ### 2. Install a package manager for Mac 
 
 You can either install [MacPorts](https://www.macports.org/) or [Homebrew](https://brew.sh/). I prefer MacPorts over homebrew and will use it for this tutorial.
 Download a MacPorts package from its [official website](https://www.macports.org/install.php) for your operating system.
 
-After installation is complete fire up your terminal again and run `port version`. If it is installed successfully it will print the version installed (`Version: 2.8.1`).   
+After installation is complete fire up your terminal again and run `port version`. If it is installed successfully it will print the version installed (`Version: 2.8.1`).    -->
 
-### 3. Install and setup python
+### 2. Install and setup python
 
-#### 3.1 Install python
+#### 2.1 Install python
 
 There are many ways to install python on your Mac, but in this tutorial I will use MacPort package manager to install a new version of python.   
 
@@ -125,7 +132,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 ```
 Type `exit()` or `quit()` to get out of REPL.
 
-#### 3.2 Install `pip`
+#### 2.2 Install `pip`
 
 `pip` is a package manager for python. Let's install it 
 
@@ -156,7 +163,7 @@ pip3 install django
 {: .nolineno}
 
 
-#### 3.3 Install python virtual environment wrapper  
+#### 2.3 Install python virtual environment wrapper  
 
 It is a best practice to use virtual environments when working on python projects. This gives you the flexibility to use different versions of same package/library for different python projects/applications. (Read more on [official doc](https://docs.python.org/3/tutorial/venv.html)).  
 
@@ -196,7 +203,7 @@ source ~/Library/Python/3.11/bin/virtualenvwrapper.sh
 
 Press keys <kbd>⌃ control</kbd> + <kbd>X</kbd> and then press `y` to save. Relaunch the terminal and then run `mkvirtualenv myvenv` to create a virtual environment `myvenv`. To start working with this virtual environment run the command `workon myvenv`. If everything is installed properly then this virtual environment will be activated. To deactivate it, run `deactivate`. Read more about `virtualenvwrapper` and how to use it on [official doc](https://virtualenvwrapper.readthedocs.io/en/latest/index.html).
 
-### 4. Install Visual STudio Code
+### 3. Install Visual STudio Code
 
 Download Visual Studio Code source code editor from its [official site](https://code.visualstudio.com/). Extract the executable and move it to the application folder.    
 Create a folder named `hello`{: .filepath} and navigate to it and launch VSC (By starting VS Code in a folder, that folder becomes your "workspace". Read more on [official doc](https://code.visualstudio.com/docs/python/python-tutorial#_start-vs-code-in-a-workspace-folder)) 
@@ -225,7 +232,7 @@ Congratulations! You have just created your first python project.
 {: .prompt-info}  
 
 
-### 5. Install Git
+<!-- ### 4. Install Git
 
 > Follow this step only if you want to use git command line.
 {: .prompt-warning} 
@@ -258,11 +265,11 @@ git config --global user.email "useremail@host.com"
 
 Replace `username` and `useremail@host.com` with your's.
 
-Now it's time to learn version control using [git](https://rogerdudler.github.io/git-guide/)
+Now it's time to learn version control using [git](https://rogerdudler.github.io/git-guide/) -->
 
-### 6. Setting up a GitHub account
+<!-- ### 5. Setting up a GitHub account -->
 
-Create a [GitHub account](https://github.com/) to host your code on cloud and share it other developers.  
+<!-- Create a [GitHub account](https://github.com/) to host your code on cloud and share it other developers.  
 
 After that you need to connect your git to GitHub. You can either connect over HTTPS os SSH. For beginner I would recommend SSH. Follow the following docs:  
 
@@ -272,4 +279,8 @@ After that you need to connect your git to GitHub. You can either connect over H
 
 3. [Add your local repo hosted code to GitHub](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git)
 
-To use multiple github accounts on Mac follow this [tutorial](https://www.haccks.com/posts/github-multi-ssh-key/)
+To use multiple github accounts on Mac follow this [tutorial](https://www.haccks.com/posts/github-multi-ssh-key/) -->
+
+### 4. Setting up a GitHub account
+
+Follow this step by step tutorial to setup git and github on Mac: []().

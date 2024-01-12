@@ -62,11 +62,12 @@ Host github.com-work                         # Notice the host for work
   IdentityFile ~/.ssh/id_ed25519_work        # Private key for work account
 
 Host *
+   # UseKeychain yes                           # If you choose a password to generate keys
    AddKeysToAgent yes                        # Load the keys from keychain into ssh-agent automatically
    IdentitiesOnly yes                        # Tells the ssh-agent server to use the IdentityFiles specified above for each host
 ```
 
-Save the file.
+Save the file. If you choose to add a password to generate your ssh keys, then uncomment line no. 14 in the above config file.
 
 > Do not add any identity file in `Host *` as suggested [here](https://apple.stackexchange.com/a/333547). We are using same host (`github.com`) for both account. This will make the server to always choose the key for the first added identity to the `ssh-agent`. Adding `IdentitiesOnly yes` will prevent the server to make the connection using the first available key and force it to use the respective keys placed under different hosts above.
 {: .prompt-tip}
