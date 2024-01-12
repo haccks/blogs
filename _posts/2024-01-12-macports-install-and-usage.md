@@ -122,7 +122,7 @@ which python3.11
 
 It will return `/opt/local/bin/python3.11`.
 
-To make it default python (you can use just `python` instead of `python3.11`), run
+To make it default python (you can use just `python3` instead of `python3.11`), run
 
 ```bash
  sudo port select --set python3 python311
