@@ -283,4 +283,4 @@ To use multiple github accounts on Mac follow this [tutorial](https://www.haccks
 
 ### 4. Setting up a GitHub account
 
-<!-- Follow this step by step tutorial to setup git and github on Mac: [](). -->
+Follow this step by step tutorial to setup git and github on Mac: [How to setup git and github on Mac OS?](https://www.haccks.com/posts/setup-git-and-github-on-mac/).
