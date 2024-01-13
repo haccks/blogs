@@ -1,5 +1,5 @@
 ---
-title: A beginner guide to setup python coding environment on Mac OS
+title: A beginner guide to setup Python coding environment on macOS
 description: "A step by step beginner guide to setting up your mac for python programming"
 date: 2024-01-07 1:20:00 +0530
 categories: [mac, python, programming]
@@ -7,7 +7,7 @@ tags: [python3, vscode, git, github]     # TAG names should always be lowercase
 render_with_liquid: false
 ---
 
-## A step by step beginner guide to setting up your mac for python programming 
+## A step by step beginner guide to setting up your Mac for python programming 
 
 ### 1.Prerequisite
 
@@ -27,7 +27,7 @@ xcode-select --install
 
 Once installed, launch your terminal and type `python3 --version` (for older MacOS version < 12.3 run `python --version`) and it will show the system python version (Python 3.9.6 on Sonoma 14.2.1).
 
-If you run `which python3` (or `which python` for older versions) in the terminal then it will return `/usr/bin/python3`. This is the default python installed for macos. This python is used by apple system. This is **the system python and let's forget about this python and and promise yourself to never look back at it again**. 
+If you run `which python3` (or `which python` for older versions) in the terminal then it will return `/usr/bin/python3`. This is the default python installed for macOS. This python is used by apple system. This is **the system python and let's forget about this python and and promise yourself to never look back at it again**. 
 
 <!-- ### 2. Install a package manager for Mac 
 

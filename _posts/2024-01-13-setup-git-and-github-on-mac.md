@@ -1,13 +1,13 @@
 ---
-title: How to setup git and github on Mac OS?
-description: "A step by step guide to setup git and github on mac"
+title: How to setup git and GitHub on macOS?
+description: "A step by step guide to setup git and GitHub on Mac"
 date: 2024-01-13 1:05:00 +0530
 categories: [mac, devops]
 tags: [git, github]     # TAG names should always be lowercase
 render_with_liquid: false
 ---
 
-## A step by step guide to setup git and github on mac
+## A step by step guide to setup git and github on Mac
 
 ### 1.Prerequisite
 

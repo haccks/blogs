@@ -162,4 +162,4 @@ sudo port install php81 mysql81 apache2
 
 + If you try to install a port and for some reason installation fails then you should run `sudo port clean portname` before reinstalling it.
 
-+ If you are upgrading your macOs (major version upgrade), then you need to migrate all ports to the new macOs version. Follow all the steps mentioned on official site: [Migrating MacPorts after a major operating system upgrade or from one computer to another](https://trac.macports.org/wiki/Migration).
++ If you are upgrading your macOS (major version upgrade), then you need to migrate all ports to the new macOS version. Follow all the steps mentioned on official site: [Migrating MacPorts after a major operating system upgrade or from one computer to another](https://trac.macports.org/wiki/Migration).

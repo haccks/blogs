@@ -1,13 +1,13 @@
 ---
-title: How to use multiple github accounts on Mac?
-description: If you have two github accounts for personal and work use then you might have some issues using both accounts on same Mac. If this is the case then this article will help you to setup both accounts on your Mac. 
+title: How to use multiple GitHub accounts on Mac?
+description: If you have two GitHub accounts for personal and work use then you might have some issues using both accounts on same Mac. If this is the case then this article will help you to setup both accounts on your Mac. 
 date: 2023-04-18 14:00:00 +0530
 categories: [mac, dev-ops, version-control]
 tags: [github, git, ssh, github-account, multiple-github-accounts]     # TAG names should always be lowercase
 render_with_liquid: false
 ---
 
-Like many others, I too have two github accounts, one for personal use and another for work. I was having trouble using both accounts on my mac for personal and office projects. I tried some tutorials and none worked out for me not because they were wrong but the instructions were not comprehensive. In this article I am putting it together all the necessary steps to make it work.  
+Like many others, I too have two GitHub accounts, one for personal use and another for work. I was having trouble using both accounts on my mac for personal and office projects. I tried some tutorials and none worked out for me not because they were wrong but the instructions were not comprehensive. In this article I am putting it together all the necessary steps to make it work.  
 
 > This solution works for macOS Monterey (Version 12.x.x) and later. 
 {: .prompt-info }
@@ -16,7 +16,7 @@ Like many others, I too have two github accounts, one for personal use and anoth
 Follow the steps below:  
 
 ## 1. Generate SSh keys
-Assuming you have two different accounts on github: `personal@domain.com` and `work@domain.com`. First, generate two different ssh keys for both of your accounts (follow the [detailed instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for generating ssh keys)
+Assuming you have two different accounts on GitHub: `personal@domain.com` and `work@domain.com`. First, generate two different ssh keys for both of your accounts (follow the [detailed instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for generating ssh keys)
 
 
 ```bash
@@ -110,7 +110,7 @@ Hi USERNAME! You've successfully authenticated, but GitHub does not provide shel
 ## 6. Clone the repo
 **Now is the tricky part**.  
 
-If you want to use your `personal` account then copy the remote repo link from github and clone it as
+If you want to use your `personal` account then copy the remote repo link from GitHub and clone it as
  
 ```bash
 git clone git@github.com:personal/project.git
@@ -123,7 +123,7 @@ git remote set-url origin git@github.com:personal/project.git
 ```
     
      
-if you want to use your `work` account then copy the remote repo url from github and modify the url by *replacing the host **`git@github.com`** by the host **`git@github.com-work`***
+if you want to use your `work` account then copy the remote repo url from GitHub and modify the url by *replacing the host **`git@github.com`** by the host **`git@github.com-work`***
   
 ```bash
 git clone git@github.com-work:company/project.git
@@ -139,11 +139,11 @@ git remote set-url origin git@github.com-work:company/project.git
 ```
     
 ## 7. Test it out
-Create a repo on github and then clone it as instructed above. Change the current working directory to the local repository. Configure the user email and name (you can do globally too but I prefer this way) for this repository.  
+Create a repo on GitHub and then clone it as instructed above. Change the current working directory to the local repository. Configure the user email and name (you can do globally too but I prefer this way) for this repository.  
 If you cloned the repo for `work` account then configure it as
 
 ```bash
 git config --local user.email "work@domain.com"
 git config --local user.name "work"
 ```
-Now you can push/pull to/from github remote repository.
+Now you can push/pull to/from GitHub remote repository.
