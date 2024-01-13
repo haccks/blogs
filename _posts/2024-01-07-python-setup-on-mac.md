@@ -1,13 +1,13 @@
 ---
-title: A beginner guide to setup Python coding environment on macOS
-description: "A step by step beginner guide to setting up your mac for python programming"
+title: How to setup Python coding environment on macOS
+description: "A step by step beginner guide to setting up your mac for Python programming"
 date: 2024-01-07 1:20:00 +0530
 categories: [mac, python, programming]
 tags: [python3, vscode, git, github]     # TAG names should always be lowercase
 render_with_liquid: false
 ---
 
-## A step by step beginner guide to setting up your Mac for python programming 
+## A step by step beginner guide to setting up your Mac for Python programming 
 
 ### 1.Prerequisite
 
@@ -36,9 +36,9 @@ Download a MacPorts package from its [official website](https://www.macports.org
 
 After installation is complete fire up your terminal again and run `port version`. If it is installed successfully it will print the version installed (`Version: 2.8.1`).    -->
 
-### 2. Install and setup python
+### 2. Install and setup Python
 
-#### 2.1 Install python
+#### 2.1 Install Python
 
 There are many ways to install python on your Mac, but in this tutorial I will use MacPort package manager to install a new version of python.   
 
