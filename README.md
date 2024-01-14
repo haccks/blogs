@@ -14,3 +14,5 @@ bundle exec jekyll serve --drafts --livereload
 
 + Drafts are posts without a date in the filename. To preview the site with drafts pass `--drafts` option.
 
+Note: If you want to redirect *haccks.com* to *www.haccks.com* then set **Custom Domain** to *www.haccks.com* in the **[GitHub Pages](https://github.com/haccks/blogs/settings/pages)** section. If you want to redirect *www.haccks.com* to *haccks.com* then set it to *haccks.com*. Read m=in details: [Configuring an apex domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain).
+
