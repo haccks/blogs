@@ -224,7 +224,7 @@ VS Code comes with hundreds of free extensions. For this tutorial we will instal
 
 ![vsc2](/assets/img/media/py-install/vsc-ext.avif){: width="720" height="600" }
 
-#### 3.2 /Select a virtual environment in VS Code
+#### 3.2 Select a virtual environment in VS Code
 
 You can create new virtual environments in VSC using Command Palette, but we have already created one in step #3 and therefore we will use that one. Type <kbd>⌘ command</kbd>+<kbd>shift</kbd>+<kbd>P</kbd> to open Command Palette. Type `Python: Select Interpreter` and select it. Then choose the python interpreter from `myvenv` (*Python 3.11.7 ('myvenv')*).
 
