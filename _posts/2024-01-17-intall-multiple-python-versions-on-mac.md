@@ -9,7 +9,7 @@ render_with_liquid: false
 
 ## A step by step tutorial for beginners to install and use multiple versions of Python on macOS
 
-<sub>If you are absolute beginner and just started Python programming and want to setup Python coding environment on you Mac then you probably don't need multiple versions. In that case I would suggest you to follow this tutorial instead: [How to setup Python coding environment on macOS](https://www.haccks.com/posts/python-setup-on-mac/).</sub>
+<sub>If you are an absolute beginner and just started Python programming and want to setup Python coding environment on you Mac then you probably don't need multiple versions. In that case I would suggest you to follow this tutorial instead: [How to setup Python coding environment on macOS](https://www.haccks.com/posts/python-setup-on-mac/).</sub>
 
 ### 1. Introduction
 
