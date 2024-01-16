@@ -1,7 +1,7 @@
 ---
 title: How to install multiple Python versions on macOS?
 description: "A comprehensive tutorial on how to manage and use multiple versions of Python on Mac"
-date: 2024-01-16 9:00:00 +0530
+date: 2024-01-17 00:15:00 +0530
 categories: [mac, python, devops]
 tags: [python3, programming]     # TAG names should always be lowercase
 render_with_liquid: false
