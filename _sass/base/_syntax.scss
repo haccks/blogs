@@ -70,6 +70,7 @@ code {
     word-break: break-word;
     border-radius: v.$radius-sm;
     background-color: var(--inline-code-bg);
+    font-family: 'JetBrains Mono';
   }
 
   &.filepath {
