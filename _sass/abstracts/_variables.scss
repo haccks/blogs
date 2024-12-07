@@ -1,11 +1,5 @@
-/*
- * The SCSS variables
- */
-
 /* sidebar */
 
-// $sidebar-width: 260px !default; /* the basic width */
-// $sidebar-width-large: 300px !default; /* screen width: >= 1650px */
 $sidebar-width: 300px !default; /* the basic width */
 $sidebar-width-large: 340px !default; /* screen width: >= 1650px */
 $sb-btn-gap: 0.8rem !default;
@@ -18,8 +12,8 @@ $search-max-width: 210px !default;
 $footer-height: 5rem !default;
 $footer-height-large: 6rem !default; /* screen width: < 850px */
 $main-content-max-width: 1250px !default;
-$bottom-min-height: 35rem !default;
-$base-radius: 0.5rem;
+$radius-sm: 6px !default;
+$radius-lg: 10px !default;
 $back2top-size: 2.75rem !default;
 
 /* syntax highlight */
@@ -34,7 +28,3 @@ $code-icon-width: 1.75rem !default;
 
 $font-family-base: 'Source Sans Pro', 'Microsoft Yahei', sans-serif !default;
 $font-family-heading: Lato, 'Microsoft Yahei', sans-serif !default;
-
-// $font-family-base: Archia,Arial,Helvetica,sans-serif !default;
-
-// $font-family-heading: Lato, 'Microsoft Yahei', sans-serif !default;
