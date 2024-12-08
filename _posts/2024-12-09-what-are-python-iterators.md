@@ -1,5 +1,5 @@
 ---
-title: What is an iterator in Python
+title: What is an iterator in Python?
 description: Iterators are python objects for traversing sequences (Sequence of elements/objects)
 date: 2024-12-09 01:45:00 +0530
 categories: [pythyon, programming]
