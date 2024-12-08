@@ -335,5 +335,3 @@ iterator.
 + [Iterators](https://docs.python.org/3/tutorial/classes.html#iterators)  
 
 + [Iterators](https://docs.python.org/dev/howto/functional.html#iterators)  
-
-+ [Iterator Protocol](https://docs.python.org/3/library/stdtypes.html#iterator-types)
