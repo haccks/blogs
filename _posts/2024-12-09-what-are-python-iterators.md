@@ -131,7 +131,7 @@ then it will print nothing for second time
 
 Let's write a custom iterable and iterator to make it more simple!
 
-### 5. An example of a custom iterable and iterator class
+### 5. Example of iterator and iterable class
 
 Classes can be given iterator behaviour by implementing both methods `__iter__()` and  `__next__()` of *iterator protocol*.   
 In the example below `Counter` is an iterable class which only supports `__iter__()` method and this method returns an
