@@ -27,7 +27,7 @@ The iterator objects themselves are required to support the following two method
 
 ### 3. What is an Iterable?
 
-An [iterable]((https://docs.python.org/3/glossary.html#term-iterable)) is an object capable of returning its members one
+An [iterable](https://docs.python.org/3/glossary.html#term-iterable) is an object capable of returning its members one
 at a time (*sequences* for example).   
 
 In simple words: An iterable is an object that can be looped over and when passed to [`iter()`](https://docs.python.org/3/library/functions.html#iter) or
