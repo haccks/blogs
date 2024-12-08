@@ -1,5 +1,5 @@
 ---
-title: What are iterators in Python?
+title: What is an iterator in Python
 description: Iterators are python objects for traversing sequences (Sequence of elements/objects)
 date: 2024-12-09 01:45:00 +0530
 categories: [pythyon, programming]
@@ -38,7 +38,7 @@ In simple words: An iterable is an object that can be looped over and when passe
 iteration support.*
 {: .prompt-info}
 
-### 4. What is the difference between an *Iterable* and an *Iterator*?
+### 4. What are the difference between *Iterators* and *Iterables*?
 
 >*Every iterator is an iterable but every iterable need not be an iterator*.
 {: .prompt-info}
@@ -131,7 +131,7 @@ then it will print nothing for second time
 
 Let's write a custom iterable and iterator to make it more simple!
 
-### 5. How to write a custom iterable and iterator class?
+### 5. An example of a custom iterable and iterator class
 
 Classes can be given iterator behaviour by implementing both methods `__iter__()` and  `__next__()` of *iterator protocol*.   
 In the example below `Counter` is an iterable class which only supports `__iter__()` method and this method returns an
