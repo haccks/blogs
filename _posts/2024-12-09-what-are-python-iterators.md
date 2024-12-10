@@ -8,13 +8,13 @@ render_with_liquid: false
 ---
 
 ## Understanding Python Iterators: A Beginner’s Guide
+
+### 1. Introduction
 In Python, iterators and iterables form the backbone of iteration. If you've ever used a `for` loop, you've benefited
 from these powerful concepts. This blog will unravel the mystery behind them, setting the stage for understanding
 generators, which we’ll explore in the next blog.
 
-Let's start with answering few basic questions!
-
-### 1. What is a Sequence?
+### 2. What is a Sequence?
 
 A sequence is a container that holds items in an ordered manner (like `list`, `str`, `tuple` etc.). It allows indexing
 and slicing using integer indices.
@@ -23,7 +23,7 @@ Examples:
 + `message = "Hello, World!"`
 + `coordinate = (5, 10)`
 
-### 2. What is an Iterator?
+### 3. What is an Iterator?
 
 An [iterator](https://docs.python.org/3/glossary.html#term-iterator) is an object representing a stream of data, yeilding one element at a time.  
 The iterator objects themselves are required to support the following two methods, which together form the ***iterator protocol***:
@@ -32,7 +32,7 @@ The iterator objects themselves are required to support the following two method
 + [`__next__()`](https://docs.python.org/dev/library/stdtypes.html#iterator.__next__): Return the next item from the
   container (one at a time). If there are no further items, raise the `StopIteration` exception.
 
-### 3. What is an Iterable?
+### 4. What is an Iterable?
 
 An [iterable](https://docs.python.org/3/glossary.html#term-iterable) is an object that produce an iterator when
 passed to [`iter()`](https://docs.python.org/3/library/functions.html#iter) method. Examples of iterables include sequences like `list`, `string`, and `tuple`.   
@@ -42,7 +42,10 @@ passed to [`iter()`](https://docs.python.org/3/library/functions.html#iter) meth
 object (that must support the iterator protocol discribed above).*
 {: .prompt-info}
 
-### 4. What are the difference between *Iterators* and *Iterables*?
+**Note that, iterable objects are not loopable inherently but it can be passed to `iter()` to get an iterator which
+eventually is iterable/loopable.** 
+
+### 5. What are the difference between *Iterators* and *Iterables*?
 
 >*Every iterator is an iterable but every iterable need not be an iterator*.
 {: .prompt-info}
@@ -56,10 +59,10 @@ NOTE: [`iter()`](https://docs.python.org/dev/library/functions.html#iter) and
 objects which implements `__iter__()` and `__next__()` methods respectively.
 
 > + *Iterators must implement both `__iter__()` and `__next__()`.*  
-+ *Iterables implement only `__iter__()`, which returns an iterator.*
+> + *Iterables implement only `__iter__()`, which returns an iterator.*
 {: .prompt-info}
 
-Let's go through some examples:
+### 6. Examples:
 
 ```python
 nums = [1, 2, 3]          # nums is an iterable
@@ -71,7 +74,8 @@ print(type(nums_it))  # Outputs: <class 'list_iterator'>
 {: .nolineno }
 
 `nums` is a sequence (`list`) and it supports `__iter__()` method, it is an
-iterable. Calling `iter(nums)` will return an iterator. Note that, `nums` it self is not an iterator.
+iterable. Calling `iter(nums)` will return an iterator. Note that, `nums` it self is not an iterator. Calling `next()`
+on list will through an error.
 
 ```python
 >>> print(next(nums))  # or nums.__iter__() will through an error
@@ -82,7 +86,7 @@ TypeError: 'list' object is not an iterator
 ```
 {: .nolineno }
 
-but calling `next()` on `nums_it` will return elements from the iterator
+But calling s`next()` on `nums_it` will return an element from the iterator
 
 ```python
 >>> next(nums_it)  # or nums_it.__next__()
@@ -99,27 +103,20 @@ StopIteration
 ```
 {: .nolineno }
 
-*So, if `nums` is not an iterator then how the following snippet loop over all the elements in `nums`?*
+### 7. How Iterators Work in Python?
+When you use a `for` loop on a container
+
 ```python
 for num in nums:
     print(num)
 ```
 {: .nolineno }
 
-
-Behind the scene, python: 
+behind the scene, Python: 
 1. calls `iter(nums)` to get an iterator. 
 2. calls `next()` repeatedly on the iterator returned in step 1 to fetch elements until `StopIteration` is raised.
 
-
->Run `print(dir(nums_it))` and it will print all the methods it
-defines
-```python
-['__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__length_hint__', '__lt__', '__ne__', '__new__', '__next__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__']
-```
-{: .prompt-tip}
-{: .nolineno }
-
+### 8. Iterator Exhaustion
 *What happens when we do `for num in nums_it:` ?*  
  
 Well, it is a bit different than `for num in nums:` or (`for num in iter(nums):`) in the sense that `nums_it` will
@@ -127,15 +124,12 @@ exhaust once last element of the iterator will be fethced by `next(nums_it)`. Me
 then it will print nothing for second time
 
 ```python
->>> for num in nums_it:
-        print(num)
-1
-2
-3
+for num in nums_it:
+    print(num)      # Outputs: 1 2 3
 
->>> for num in nums_it:
-        print(num)
->>>
+for num in nums_it:
+    print(num)      # Outputs nothing, iterator is exhausted
+
 ```
 {: .nolineno }
 
@@ -143,15 +137,15 @@ then it will print nothing for second time
 {: .prompt-info}
 
 
-### 5. Example of iterator and iterable class (Custom iterator and iterable)
+### 9. Custom Iterator and Iterable Class
 
 Classes can exibit iterator behaviour by implementing both the `__iter__()` and  `__next__()` method of *iterator
 protocol*. 
 
-In the example below `ForwardCounter` and `BackwarCouneter` implement the *iterator protocol*, making them both iterators as
+In the example below `ForwardCounter` and `BackwardCouneter` implement the *iterator protocol*, making them both iterators as
 well as iterables.  
 On the other hand, `Counter` is an iterable class which only supports `__iter__()` method. This method returns an
-iterator object of either class `ForwardCounter` or `BackwarCouneter`.
+iterator object of either class `ForwardCounter` or `BackwardCouneter`.
 
 Forward Counter:
 
@@ -333,7 +327,7 @@ counter_it = iter(counter)
 print(next(counter_it))   # Outputs: 5
 ```
 
-### 6. Why is `__iter__()` Important for Iterators? 
+### 10. Why is `__iter__()` Important for Iterators? 
 
 The example 
 
@@ -349,11 +343,39 @@ As already explained above, when you use a statement like `for i in fw_it`:, Pyt
 
 If the `__iter__()` method is missing, the `fw_it` object will not be recognized as an iterable, and the `for` loop will raise a `TypeError`. This is because `for` loops require objects to support the iterable protocol, even for iterators.
 
-To see this in action, try removing the `__iter__()` method from fw_counter and then running `for i in fw_it`:. You’ll encounter an error.
+To see this in action, try removing the `__iter__()` method from fw_counter and then running `for i in fw_it`:. You’ll
+encounter an error.
+
+### 11. Real-World Application of Iteratos
+Iterators can be ver useful when dealing with large datasets, as they help optimize memory usage by processing one item
+at a time instead of loading everything into memory at once.
+
+Imagine you have a file with millions of records that you need to read and process. A naive approach might look like this:
+
+```python
+with open("huge_file.txt") as f:
+    for line in f.readlines():
+        do_some_processing(line)
+```
+This will load the entire file data to the memory. This can exhaust your system memory and can lead to crashes. An efficient approach would be to use an iterator 
+
+```python
+with open("huge_file.txt") as f:   # The file object f is an iterator
+    for line in f:
+        do_some_processing(line)
+```
+
+This will read the file line by line without loading the entire file into the system's memory.
+
+### 12. Summary
+
++ **Iterables**: Objects that can be passed to `iter()` to obtain an iterator.
++ **Iterators**: Objects that implement `__iter__()` and `__next__()` to produce elements.
++ Using iterators can be memory efficient when dealing with large data
 
 ---------
 
-<h3>References: </h3>  
+<h3>References:</h3>  
 
 + [iterator types](https://docs.python.org/dev/library/stdtypes.html#iterator-types)  
 
