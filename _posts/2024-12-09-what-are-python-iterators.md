@@ -7,18 +7,25 @@ tags: [python3, iterators, iterable]     # TAG names should always be in lowerca
 render_with_liquid: false
 ---
 
-Let's start answering few basic questions!
+## Understanding Python Iterators: A Beginner’s Guide
+In Python, iterators and iterables form the backbone of iteration. If you've ever used a `for` loop, you've benefited
+from these powerful concepts. This blog will unravel the mystery behind them, setting the stage for understanding
+generators, which we’ll explore in the next blog.
 
-## Iterators
+Let's start with answering few basic questions!
 
 ### 1. What is a Sequence?
 
 A sequence is a container that holds items in an ordered manner (like `list`, `str`, `tuple` etc.). It allows indexing
 and slicing using integer indices.
+Examples:
++ `nums = [1, 2, 3]`
++ `message = "Hello, World!"`
++ `coordinate = (5, 10)`
 
 ### 2. What is an Iterator?
 
-An [iterator](https://docs.python.org/3/glossary.html#term-iterator) is an object representing a stream of data; this object returns the data one element at a time.  
+An [iterator](https://docs.python.org/3/glossary.html#term-iterator) is an object representing a stream of data, yeilding one element at a time.  
 The iterator objects themselves are required to support the following two methods, which together form the ***iterator protocol***:
 + [`__iter__()`](https://docs.python.org/dev/reference/datamodel.html#object.__iter__): Return the iterator object
   itself. This is required to allow both containers and iterators to be used with the `for` and `in` statements.
@@ -27,15 +34,12 @@ The iterator objects themselves are required to support the following two method
 
 ### 3. What is an Iterable?
 
-An [iterable](https://docs.python.org/3/glossary.html#term-iterable) is an object capable of returning its members one
-at a time (*sequences* for example).   
-
-In simple words: An iterable is an object that can be looped over and when passed to [`iter()`](https://docs.python.org/3/library/functions.html#iter) or
-`__iter()__` methods it returns an iterator obejct.  
+An [iterable](https://docs.python.org/3/glossary.html#term-iterable) is an object that produce an iterator when
+passed to [`iter()`](https://docs.python.org/3/library/functions.html#iter) method. Examples of iterables include sequences like `list`, `string`, and `tuple`.   
 
 >*Iterable object must implement
-[`__iter__()`](https://docs.python.org/dev/library/stdtypes.html#container.__iter__) method (which returns an iterator object that support the iterator protocol discribed above) to provide
-iteration support.*
+[`__iter__()`](https://docs.python.org/dev/library/stdtypes.html#container.__iter__) method which returns an iterator
+object (that must support the iterator protocol discribed above).*
 {: .prompt-info}
 
 ### 4. What are the difference between *Iterators* and *Iterables*?
@@ -51,67 +55,73 @@ NOTE: [`iter()`](https://docs.python.org/dev/library/functions.html#iter) and
 [`next()`](https://docs.python.org/dev/library/functions.html#next) are built-in functions which can be applied on the
 objects which implements `__iter__()` and `__next__()` methods respectively.
 
-Confused?
-Ah! I got you :), do not worry and let's see some examples that will help you understand better.
+> + *Iterators must implement both `__iter__()` and `__next__()`.*  
++ *Iterables implement only `__iter__()`, which returns an iterator.*
+{: .prompt-info}
 
-Let's start with some a simple example:
+Let's go through some examples:
 
 ```python
->>> nums = [1, 2, 3]          # nums is a list object and it is an iterable
->>> nums_it = iter(nums)      # nums_it is an iterator (list_iterator) object. __iter__() method is supported by list class
->>> type(nums)
-<class 'list'>
->>> type(nums_it)
-<class 'list_iterator'>
->>>
+nums = [1, 2, 3]          # nums is an iterable
+nums_it = iter(nums)      # nums_it is an iterator 
+
+print(type(nums))     # Outputs: <class 'list'>
+print(type(nums_it))  # Outputs: <class 'list_iterator'>
 ```
 {: .nolineno }
 
-`nums` is a sequence (`list`) object containing integer numbers. Since it supports `__iter__()` method, it is an
+`nums` is a sequence (`list`) and it supports `__iter__()` method, it is an
 iterable. Calling `iter(nums)` will return an iterator. Note that, `nums` it self is not an iterator.
 
 ```python
->>> next(nums)  # or nums.__iter__() will through an error
+>>> print(next(nums))  # or nums.__iter__() will through an error
 
 Traceback (most recent call last):
   File "<input>", line 1, in <module>
 TypeError: 'list' object is not an iterator
->>>
 ```
 {: .nolineno }
 
 but calling `next()` on `nums_it` will return elements from the iterator
 
 ```python
->>> next(nums_it)
+>>> next(nums_it)  # or nums_it.__next__()
 1
->>> nums_it.__next__()
+>>> next(nums_it)
 2
+>>> next(nums_it)
+3
+>>> next(nums_it)  # No further item left in the container
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+StopIteration
 >>>
 ```
 {: .nolineno }
 
-So, if `nums` is not an iterator then why 
+*So, if `nums` is not an iterator then how the following snippet loop over all the elements in `nums`?*
 ```python
->>> for num in nums:
-        print(num)
->>>
+for num in nums:
+    print(num)
 ```
 {: .nolineno }
-prints all the elements in the list `nums`?
 
-Behind the scene, `for` calls `iter()` on `nums` container. This returns an iterator object that defines method
-`__next__()` which accesses elements in the container one at a time. Run `dir(iter(nums))` and it will print all the methods it
+
+Behind the scene, python: 
+1. calls `iter(nums)` to get an iterator. 
+2. calls `next()` repeatedly on the iterator returned in step 1 to fetch elements until `StopIteration` is raised.
+
+
+>Run `print(dir(nums_it))` and it will print all the methods it
 defines
-
 ```python
->>> dir(nums_it)
 ['__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__length_hint__', '__lt__', '__ne__', '__new__', '__next__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__']
->>>
 ```
+{: .prompt-tip}
 {: .nolineno }
 
-What happens when we do `for num in nums_it:` ?  
+*What happens when we do `for num in nums_it:` ?*  
+ 
 Well, it is a bit different than `for num in nums:` or (`for num in iter(nums):`) in the sense that `nums_it` will
 exhaust once last element of the iterator will be fethced by `next(nums_it)`. Meaning if you run the below code twice
 then it will print nothing for second time
@@ -129,15 +139,21 @@ then it will print nothing for second time
 ```
 {: .nolineno }
 
-Let's write a custom iterable and iterator to make it more simple!
+>*Iterators are exhausted after one pass, unlike iterables which can be re-iterated by creating a new iterator*
+{: .prompt-info}
 
-### 5. Example of iterator and iterable class
 
-Classes can be given iterator behaviour by implementing both methods `__iter__()` and  `__next__()` of *iterator protocol*.   
-In the example below `Counter` is an iterable class which only supports `__iter__()` method and this method returns an
-iterable object of either class `ForwardCounter` or `BackwarCouneter`. Both of these class implements the *iterator protocol* so
-they are iterators (as well as iterable, as `__iter__()` method returns `self` object that supports `__next__()`
-method).
+### 5. Example of iterator and iterable class (Custom iterator and iterable)
+
+Classes can exibit iterator behaviour by implementing both the `__iter__()` and  `__next__()` method of *iterator
+protocol*. 
+
+In the example below `ForwardCounter` and `BackwarCouneter` implement the *iterator protocol*, making them both iterators as
+well as iterables.  
+On the other hand, `Counter` is an iterable class which only supports `__iter__()` method. This method returns an
+iterator object of either class `ForwardCounter` or `BackwarCouneter`.
+
+Forward Counter:
 
 ```python
 class ForwardCounter:
@@ -189,7 +205,18 @@ class ForwardCounter:
         self.current += 1
         return self.current
 
+# Example run:
+fw_counter = ForwardCounter(5)
 
+print(next(fw_counter))  # Outputs: 1
+
+for num in fw_counter:
+    print(num)  # Outputs: 2 3 4 5
+```
+
+Backward Counter:
+
+```python
 class BackwardCounter:
     """
     A backward counter class that counts down from a specified number to 1.
@@ -240,6 +267,18 @@ class BackwardCounter:
         return self.current
 
 
+# Example run:
+bw_counter = BackwardCounter(5)
+
+print(next(bw_counter))  # Outputs: 5
+
+for num in bw_counter:
+    print(num)           # Outputs: 4 3 2 1
+```
+
+Counter:
+
+```python
 class Counter:
     """
     A flexible counter class that provides forward or backward counting 
@@ -280,60 +319,37 @@ class Counter:
         else:
             return BackwardCounter(self.limit)
 
+
+# Example run:
+counter = Counter(1, 5) 
+
+for num in counter:
+    print(num)        # Outputs: 5 4 3 2 1
+
+
+# print(next(counter))        # Will produce TypeError
+
+counter_it = iter(counter)
+print(next(counter_it))   # Outputs: 5
 ```
 
-Now let's play around with the iterator and iterable we wrote:
+### 6. Why is `__iter__()` Important for Iterators? 
+
+The example 
 
 ```python
->>> counter = Counter(1, 5)     # creates an iterable object. Not an iterator
-
->>> next(counter)
-Traceback (most recent call last):
-  File "<input>", line 1, in <module>
-TypeError: 'Counter' object is not an iterator
-
->>> counter_it = iter(counter)
->>> next(counter_it)
-5
->>> next(counter_it)
-4
->>> next(counter_it)
-3
->>> next(counter_it)
-2
->>> next(counter_it)
-1
->>> next(counter_it)
-Traceback (most recent call last):
-  File "<input>", line 1, in <module>
-  File "<input>", line 96, in __next__
-StopIteration
-
-
->>> fw_it = ForwardCounter(5)  # Iterable as well as iterator
->>> fw_it
-<__main__.ForwardCounter object at 0x121afb980>
-
->>> for i in fw_it:     
-        print(i)
-1
-2
-3
-4
-5
-
->>>
+for i in fw_it:     
+    print(i)
 ```
 {: .nolineno }
 
-The last example demonstrates why the `__iter__()` method is essential for an iterator (and why an iterator should also be iterable).
+demonstrates why the `__iter__()` method is essential for an iterator (and why an iterator should also be iterable).
 
-When you use a statement like `for i in fw_it`:, Python internally calls the `iter()` function on the `fw_it` object. Even if `fw_it` is already an iterator, the `iter()` function ensures compatibility with the iterable protocol by calling the object's `__iter__()` method.
+As already explained above, when you use a statement like `for i in fw_it`:, Python internally calls the `iter()` function on the `fw_it` object. Even if `fw_it` is already an iterator, the `iter()` function ensures compatibility with the iterable protocol by calling the object's `__iter__()` method.
 
 If the `__iter__()` method is missing, the `fw_it` object will not be recognized as an iterable, and the `for` loop will raise a `TypeError`. This is because `for` loops require objects to support the iterable protocol, even for iterators.
 
 To see this in action, try removing the `__iter__()` method from fw_counter and then running `for i in fw_it`:. You’ll encounter an error.
-
 
 ---------
 
