@@ -7,7 +7,7 @@ tags: [python3, iterators, iterable]     # TAG names should always be in lowerca
 render_with_liquid: false
 ---
 
-Let's start with the answering some basic questions!
+Let's start answering few basic questions!
 
 ## Iterators
 
@@ -303,6 +303,12 @@ TypeError: 'Counter' object is not an iterator
 2
 >>> next(counter_it)
 1
+>>> next(counter_it)
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+  File "<input>", line 96, in __next__
+StopIteration
+
 
 >>> fw_it = ForwardCounter(5)  # Iterable as well as iterator
 >>> fw_it
@@ -320,10 +326,13 @@ TypeError: 'Counter' object is not an iterator
 ```
 {: .nolineno }
 
-The last sample is the answer that why we need `__iter__()` method to be supported by an iterator (and why it should be
-an iterable!).   
-In `for i in fw_it:`, internally the `for` statement calls `iter()` on `fw_it` object, even if it is already an
-iterator. 
+The last example demonstrates why the `__iter__()` method is essential for an iterator (and why an iterator should also be iterable).
+
+When you use a statement like `for i in fw_it`:, Python internally calls the `iter()` function on the `fw_it` object. Even if `fw_it` is already an iterator, the `iter()` function ensures compatibility with the iterable protocol by calling the object's `__iter__()` method.
+
+If the `__iter__()` method is missing, the `fw_it` object will not be recognized as an iterable, and the `for` loop will raise a `TypeError`. This is because `for` loops require objects to support the iterable protocol, even for iterators.
+
+To see this in action, try removing the `__iter__()` method from fw_counter and then running `for i in fw_it`:. You’ll encounter an error.
 
 
 ---------
