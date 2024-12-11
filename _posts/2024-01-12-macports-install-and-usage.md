@@ -8,7 +8,7 @@ render_with_liquid: false
 # pin: true
 ---
 
-## A step by step tutorial to install MacPorts on Mac and use it to to manage packages.
+## A step by step tutorial to install MacPorts on Mac and its usage to manage packages.
 
 There are two popular package manager for Mac, [Macports](https://www.macports.org/) and [Homebrew](https://brew.sh/). Both package managers are great and have their own strength. This blog is all about installation and usage of MacPorts. 
 
