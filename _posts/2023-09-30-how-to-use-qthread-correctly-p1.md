@@ -330,4 +330,7 @@ While using *worker-object* approach you have to keep in mind:
 
 + Slots of `worker` instance is invoked in the new thread, but if this is called as normal member function from main thread then it will be invoked in the main thread.
 
-*[Continued...](https://www.haccks.com/posts/how-to-use-qthread-correctly-p2/)*
+In the next part: *[How to use QThread correctly (part 2)?](https://www.haccks.com/posts/how-to-use-qthread-correctly-p2/)*, you will learn:
+3. Add a cancel button to the above example to abort the download
+4. How to use non-GUI Qt class in secondary thread  
+

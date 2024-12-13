@@ -102,7 +102,7 @@ def stop_download(self):
 ```
 {: .nolineno}
 
- Let's modify `demo-worker-object.py` {: .filepath } file as follows
+ Let's modify `demo-worker-object.py`{: .filepath} file as follows
 
  ```py
  class Worker(QObject):
@@ -224,7 +224,7 @@ class MainWindow(QMainWindow):
 {: file="demo-worker-object-cancel-fix.py" }
 <sub>[Code on github](https://gist.github.com/haccks/0fec103be10a963d49d050df86e87547#file-demo-worker-object-cancel-fix-py)</sub>
 
-Todo: Add a gif
+![qthread-2](/assets/img/media/demo-sub-cancel.gif)
 
 Note that `cancel_btn.clicked` signal is not connected to `worker.stop_download()` slot rather it is connected to `cancel()` slot of `MainWindow`. Since `cancel()` is invoked in main thread and hence it will invoke `worker.stop_download()` as a normal method in main thread instead of worker thread.  
 
