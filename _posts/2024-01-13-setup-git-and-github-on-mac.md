@@ -123,6 +123,7 @@ Check the added key with `ssh-add -l`.
 ```bash
 pbcopy < ~/.ssh/id_ed25519.pub
 ```
+{: .nolineno}
 
 + Go to your GitHub account and click on your the avatar on top right corner and then click on **Settings**
 
@@ -139,7 +140,7 @@ pbcopy < ~/.ssh/id_ed25519.pub
 ```bash
 ssh -T git@github.com
 ```
-{: .noloneno}
+{: .nolineno}
 
 If you setup your git and GitHub account correctly then the above command should return the below message 
 
