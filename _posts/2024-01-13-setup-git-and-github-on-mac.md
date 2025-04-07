@@ -83,16 +83,16 @@ eval "$(ssh-agent -s)"
 ```
 {: .nolineno}
 
-#### 4.2 Modify your `~./ssh/config` file
+#### 4.2 Modify your `~/.ssh/config` file
 
-Check if `~./ssh/config` exists, else create one
+Check if `~/.ssh/config` exists, else create one
 
 ```bash
-touch ~./ssh/config
+touch ~/.ssh/config
 ```
 {: .nolineno}
 
-Open `~./ssh/config` in your favorite text editor and add these lines
+Open `~/.ssh/config` in your favorite text editor and add these lines
 
 ```conf
 Host github.com
@@ -137,7 +137,7 @@ pbcopy < ~/.ssh/id_ed25519.pub
 #### 4.5 Test the Connection
 
 ```bash
-ssh -T git@github.co
+ssh -T git@github.com
 ```
 {: .noloneno}
 
